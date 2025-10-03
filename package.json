@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:custom": "cd android && run-android.bat",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",

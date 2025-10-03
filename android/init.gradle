@@ -1,0 +1,61 @@
+allprojects {
+    repositories {
+        maven { 
+            url 'http://maven.aliyun.com/repository/google'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/public'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/gradle-plugin'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/jcenter'
+            allowInsecureProtocol = true
+        }
+        google()
+        mavenCentral()
+    }
+}
+
+// 强制重定向HTTPS仓库到HTTP阿里云镜像
+def redirectRepositoryUrl(repo, targetUrl) {
+    def url = repo.url.toString()
+    if (url.startsWith("https://repo.maven.apache.org") || 
+        url.startsWith("https://plugins.gradle.org") ||
+        url.startsWith("https://jcenter.bintray.com")) {
+        repo.setUrl(targetUrl)
+    }
+}
+
+gradle.allprojects { project ->
+    project.repositories.whenObjectAdded { repo ->
+        if (repo instanceof org.gradle.api.artifacts.repositories.MavenArtifactRepository) {
+            // 重定向到阿里云镜像
+            if (repo.url.toString().contains("repo.maven.apache.org")) {
+                redirectRepositoryUrl(repo, "http://maven.aliyun.com/repository/public")
+            } else if (repo.url.toString().contains("plugins.gradle.org")) {
+                redirectRepositoryUrl(repo, "http://maven.aliyun.com/repository/gradle-plugin")
+            } else if (repo.url.toString().contains("jcenter.bintray.com")) {
+                redirectRepositoryUrl(repo, "http://maven.aliyun.com/repository/jcenter")
+            }
+        }
+    }
+    
+    // 处理已存在的仓库
+    project.repositories.each { repo ->
+        if (repo instanceof org.gradle.api.artifacts.repositories.MavenArtifactRepository) {
+            // 重定向到阿里云镜像
+            if (repo.url.toString().contains("repo.maven.apache.org")) {
+                redirectRepositoryUrl(repo, "http://maven.aliyun.com/repository/public")
+            } else if (repo.url.toString().contains("plugins.gradle.org")) {
+                redirectRepositoryUrl(repo, "http://maven.aliyun.com/repository/gradle-plugin")
+            } else if (repo.url.toString().contains("jcenter.bintray.com")) {
+                redirectRepositoryUrl(repo, "http://maven.aliyun.com/repository/jcenter")
+            }
+        }
+    }
+}

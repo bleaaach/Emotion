@@ -1,0 +1,54 @@
+// 强制所有HTTPS连接重定向到HTTP阿里云镜像
+initscript {
+    repositories {
+        maven { 
+            url 'http://maven.aliyun.com/repository/gradle-plugin'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/public'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/google'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/jcenter'
+            allowInsecureProtocol = true
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        maven { 
+            url 'http://maven.aliyun.com/repository/gradle-plugin'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/public'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/google'
+            allowInsecureProtocol = true
+        }
+        maven { 
+            url 'http://maven.aliyun.com/repository/jcenter'
+            allowInsecureProtocol = true
+        }
+        google()
+        mavenCentral()
+    }
+    
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            // 可以在这里添加依赖版本冲突解决策略
+        }
+    }
+}
+
+// 配置HTTP协议优先
+System.setProperty('https.protocols', 'TLSv1,TLSv1.1,TLSv1.2')
+System.setProperty('jdk.tls.client.protocols', 'TLSv1,TLSv1.1,TLSv1.2')
