@@ -6,58 +6,58 @@ import StatsChart from '../components/StatsChart';
 import InsightCard from '../components/InsightCard';
 
 const PersonalProfileScreen = ({ navigation }: any) => {
-  // Ê¾ÀýÊý¾Ý
+  // ç¤ºä¾‹æ•°æ®
   const insights = [
     {
       id: 1,
-      title: "¼ÛÖµ¹Û¶´²ì",
-      content: "Äã×î³£Ìáµ½µÄ¹Ø¼ü´ÊÊÇ'³É³¤'ºÍ'Ñ§Ï°'£¬Õâ±íÃ÷Äã·Ç³£ÖØÊÓ¸öÈË·¢Õ¹¡£"
+      title: "ä»·å€¼è§‚æ´žå¯Ÿ",
+      content: "ä½ æœ€å¸¸æåˆ°çš„å…³é”®è¯æ˜¯'æˆé•¿'å’Œ'å­¦ä¹ 'ï¼Œè¿™è¡¨æ˜Žä½ éžå¸¸é‡è§†ä¸ªäººå‘å±•ã€‚"
     },
     {
       id: 2,
-      title: "ÇéÐ÷Ä£Ê½",
-      content: "ÔÚÃèÊöÈË¼Ê¹ØÏµÊ±£¬Äã¾­³£Ê¹ÓÃ'Àí½â'ºÍ'°üÈÝ'µÈ´Ê»ã£¬ÌåÏÖÁËÄãµÄÍ¬ÀíÐÄ¡£"
+      title: "æƒ…ç»ªæ¨¡å¼",
+      content: "åœ¨æè¿°äººé™…å…³ç³»æ—¶ï¼Œä½ ç»å¸¸ä½¿ç”¨'ç†è§£'å’Œ'åŒ…å®¹'ç­‰è¯æ±‡ï¼Œä½“çŽ°äº†ä½ çš„åŒç†å¿ƒã€‚"
     }
   ];
 
   const answeredQuestions = [
-    { id: 1, title: "Ê²Ã´Çé¿öÏÂÄã»á¸Ðµ½×îÓÐ»îÁ¦£¿", date: "2023-05-15" },
-    { id: 2, title: "ÃèÊöÒ»¸öÈÃÄã¸Ðµ½ÉîÉîÂú×ãµÄÊ±¿Ì", date: "2023-05-10" },
-    { id: 3, title: "Äã×îÐÀÉÍÅóÓÑÉíÉÏµÄÄÄÐ©Æ·ÖÊ£¿", date: "2023-05-05" }
+    { id: 1, title: "ä»€ä¹ˆæƒ…å†µä¸‹ä½ ä¼šæ„Ÿåˆ°æœ€æœ‰æ´»åŠ›ï¼Ÿ", date: "2023-05-15" },
+    { id: 2, title: "æè¿°ä¸€ä¸ªè®©ä½ æ„Ÿåˆ°æ·±æ·±æ»¡è¶³çš„æ—¶åˆ»", date: "2023-05-10" },
+    { id: 3, title: "ä½ æœ€æ¬£èµæœ‹å‹èº«ä¸Šçš„å“ªäº›å“è´¨ï¼Ÿ", date: "2023-05-05" }
   ];
 
-  const tags = ['³É³¤', 'Ñ§Ï°', 'Àí½â', '°üÈÝ', '¼ÛÖµ¹Û', 'ÈË¼Ê¹ØÏµ'];
+  const tags = ['æˆé•¿', 'å­¦ä¹ ', 'ç†è§£', 'åŒ…å®¹', 'ä»·å€¼è§‚', 'äººé™…å…³ç³»'];
 
   return (
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="¸öÈËµµ°¸" />
+        <Appbar.Content title="ä¸ªäººæ¡£æ¡ˆ" />
       </Appbar.Header>
 
       <ScrollView style={styles.content}>
-        {/* µµ°¸¸ÅÀÀ */}
+        {/* æ¡£æ¡ˆæ¦‚è§ˆ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>µµ°¸¸ÅÀÀ</Text>
+          <Text style={styles.sectionTitle}>æ¡£æ¡ˆæ¦‚è§ˆ</Text>
           <View style={styles.profileSummary}>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>24</Text>
-              <Text style={styles.statLabel}>ÒÑ»Ø´ðÎÊÌâ</Text>
+              <Text style={styles.statLabel}>å·²å›žç­”é—®é¢˜</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>18</Text>
-              <Text style={styles.statLabel}>´´½¨±êÇ©</Text>
+              <Text style={styles.statLabel}>åˆ›å»ºæ ‡ç­¾</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>42</Text>
-              <Text style={styles.statLabel}>¶´²ì·¢ÏÖ</Text>
+              <Text style={styles.statLabel}>æ´žå¯Ÿå‘çŽ°</Text>
             </View>
           </View>
         </Card>
 
-        {/* ¹Ø¼ü´ÊÔÆ */}
+        {/* å…³é”®è¯äº‘ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>¹Ø¼ü´ÊÔÆ</Text>
+          <Text style={styles.sectionTitle}>å…³é”®è¯äº‘</Text>
           <View style={styles.tagCloud}>
             {tags.map((tag, index) => (
               <Chip 
@@ -71,9 +71,9 @@ const PersonalProfileScreen = ({ navigation }: any) => {
           </View>
         </Card>
 
-        {/* ¸öÈË¶´²ì */}
+        {/* ä¸ªäººæ´žå¯Ÿ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>¸öÈË¶´²ì</Text>
+          <Text style={styles.sectionTitle}>ä¸ªäººæ´žå¯Ÿ</Text>
           {insights.map((insight) => (
             <InsightCard 
               key={insight.id}
@@ -83,15 +83,15 @@ const PersonalProfileScreen = ({ navigation }: any) => {
           ))}
         </Card>
 
-        {/* »Ø´ðÀúÊ· */}
+        {/* å›žç­”åŽ†å² */}
         <Card style={styles.section}>
           <View style={styles.headerRow}>
-            <Text style={styles.sectionTitle}>»Ø´ðÀúÊ·</Text>
+            <Text style={styles.sectionTitle}>å›žç­”åŽ†å²</Text>
             <Button 
               mode="text" 
               onPress={() => navigation.navigate('QuestionLibrary')}
             >
-              ²é¿´È«²¿
+              æŸ¥çœ‹å…¨éƒ¨
             </Button>
           </View>
           {answeredQuestions.map((question) => (
@@ -105,28 +105,28 @@ const PersonalProfileScreen = ({ navigation }: any) => {
           ))}
         </Card>
 
-        {/* µµ°¸¸üÐÂÀúÊ· */}
+        {/* æ¡£æ¡ˆæ›´æ–°åŽ†å² */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>µµ°¸¸üÐÂÀúÊ·</Text>
+          <Text style={styles.sectionTitle}>æ¡£æ¡ˆæ›´æ–°åŽ†å²</Text>
           <View style={styles.timeline}>
             <View style={styles.timelineItem}>
               <View style={styles.timelineDot} />
               <View style={styles.timelineContent}>
-                <Text style={styles.timelineTitle}>µµ°¸´´½¨</Text>
+                <Text style={styles.timelineTitle}>æ¡£æ¡ˆåˆ›å»º</Text>
                 <Text style={styles.timelineDate}>2023-04-01</Text>
               </View>
             </View>
             <View style={styles.timelineItem}>
               <View style={styles.timelineDot} />
               <View style={styles.timelineContent}>
-                <Text style={styles.timelineTitle}>Ê×´Î»Ø´ðÎÊÌâ</Text>
+                <Text style={styles.timelineTitle}>é¦–æ¬¡å›žç­”é—®é¢˜</Text>
                 <Text style={styles.timelineDate}>2023-04-05</Text>
               </View>
             </View>
             <View style={styles.timelineItem}>
               <View style={styles.timelineDot} />
               <View style={styles.timelineContent}>
-                <Text style={styles.timelineTitle}>Éú³ÉÊ×¸ö¶´²ì</Text>
+                <Text style={styles.timelineTitle}>ç”Ÿæˆé¦–ä¸ªæ´žå¯Ÿ</Text>
                 <Text style={styles.timelineDate}>2023-04-12</Text>
               </View>
             </View>

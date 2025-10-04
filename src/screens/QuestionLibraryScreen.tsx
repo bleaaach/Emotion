@@ -5,78 +5,78 @@ import Card from '../components/Card';
 import EmotionChip from '../components/EmotionChip';
 
 const QuestionLibraryScreen = ({ navigation }: any) => {
-  // ÎÊÌâ·ÖÀà
+  // é—®é¢˜åˆ†ç±»
   const categories = [
-    { id: 1, name: '×ÔÎÒÈÏÖª', color: '#FF6B6B' },
-    { id: 2, name: '¼ÛÖµ¹Û', color: '#4ECDC4' },
-    { id: 3, name: 'ÈË¼Ê¹ØÏµ', color: '#45B7D1' },
-    { id: 4, name: 'ÇéĞ÷¹ÜÀí', color: '#96CEB4' },
-    { id: 5, name: 'Ä¿±êÓëÃÎÏë', color: '#FFEAA7' },
-    { id: 6, name: '³É³¤¾­Àú', color: '#DDA0DD' }
+    { id: 1, name: 'è‡ªæˆ‘è®¤çŸ¥', color: '#FF6B6B' },
+    { id: 2, name: 'ä»·å€¼è§‚', color: '#4ECDC4' },
+    { id: 3, name: 'äººé™…å…³ç³»', color: '#45B7D1' },
+    { id: 4, name: 'æƒ…ç»ªç®¡ç†', color: '#96CEB4' },
+    { id: 5, name: 'ç›®æ ‡ä¸æ¢¦æƒ³', color: '#FFEAA7' },
+    { id: 6, name: 'æˆé•¿ç»å†', color: '#DDA0DD' }
   ];
 
-  // Ê¾ÀıÎÊÌâÊı¾İ
+  // ç¤ºä¾‹é—®é¢˜æ•°æ®
   const sampleQuestions = [
     {
       id: 1,
-      title: 'Ê²Ã´Çé¿öÏÂÄã»á¸Ğµ½×îÓĞ»îÁ¦£¿',
-      category: '×ÔÎÒÈÏÖª',
+      title: 'ä»€ä¹ˆæƒ…å†µä¸‹ä½ ä¼šæ„Ÿåˆ°æœ€æœ‰æ´»åŠ›ï¼Ÿ',
+      category: 'è‡ªæˆ‘è®¤çŸ¥',
       isFavorite: true,
       isAnswered: false
     },
     {
       id: 2,
-      title: 'ÃèÊöÒ»¸öÈÃÄã¸Ğµ½ÉîÉîÂú×ãµÄÊ±¿Ì',
-      category: '¼ÛÖµ¹Û',
+      title: 'æè¿°ä¸€ä¸ªè®©ä½ æ„Ÿåˆ°æ·±æ·±æ»¡è¶³çš„æ—¶åˆ»',
+      category: 'ä»·å€¼è§‚',
       isFavorite: false,
       isAnswered: true
     },
     {
       id: 3,
-      title: 'Äã×îĞÀÉÍÅóÓÑÉíÉÏµÄÄÄĞ©Æ·ÖÊ£¿',
-      category: 'ÈË¼Ê¹ØÏµ',
+      title: 'ä½ æœ€æ¬£èµæœ‹å‹èº«ä¸Šçš„å“ªäº›å“è´¨ï¼Ÿ',
+      category: 'äººé™…å…³ç³»',
       isFavorite: true,
       isAnswered: false
     },
     {
       id: 4,
-      title: 'µ±Äã¸Ğµ½½¹ÂÇÊ±£¬Í¨³£»á×öÊ²Ã´À´»º½â£¿',
-      category: 'ÇéĞ÷¹ÜÀí',
+      title: 'å½“ä½ æ„Ÿåˆ°ç„¦è™‘æ—¶ï¼Œé€šå¸¸ä¼šåšä»€ä¹ˆæ¥ç¼“è§£ï¼Ÿ',
+      category: 'æƒ…ç»ªç®¡ç†',
       isFavorite: false,
       isAnswered: true
     },
     {
       id: 5,
-      title: 'ÎåÄêºóÄãÏ£Íû³ÉÎªÊ²Ã´ÑùµÄÈË£¿',
-      category: 'Ä¿±êÓëÃÎÏë',
+      title: 'äº”å¹´åä½ å¸Œæœ›æˆä¸ºä»€ä¹ˆæ ·çš„äººï¼Ÿ',
+      category: 'ç›®æ ‡ä¸æ¢¦æƒ³',
       isFavorite: false,
       isAnswered: false
     },
     {
       id: 6,
-      title: 'Í¯ÄêÊ±ÆÚÄÄ¸ö¾­Àú¶ÔÄãÓ°Ïì×îÉî£¿',
-      category: '³É³¤¾­Àú',
+      title: 'ç«¥å¹´æ—¶æœŸå“ªä¸ªç»å†å¯¹ä½ å½±å“æœ€æ·±ï¼Ÿ',
+      category: 'æˆé•¿ç»å†',
       isFavorite: true,
       isAnswered: false
     }
   ];
 
-  // ×´Ì¬
+  // çŠ¶æ€
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [questions] = useState(sampleQuestions);
 
-  // ¹ıÂËÎÊÌâ
+  // è¿‡æ»¤é—®é¢˜
   const filteredQuestions = selectedCategory
     ? questions.filter(q => q.category === selectedCategory)
     : questions;
 
-  // ÇĞ»»ÊÕ²Ø×´Ì¬
+  // åˆ‡æ¢æ”¶è—çŠ¶æ€
   const toggleFavorite = (id: number) => {
-    console.log('ÇĞ»»ÊÕ²Ø×´Ì¬:', id);
-    // ÕâÀïÓ¦¸Ã¸üĞÂ±¾µØ´æ´¢ÖĞµÄÎÊÌâÊı¾İ
+    console.log('åˆ‡æ¢æ”¶è—çŠ¶æ€:', id);
+    // è¿™é‡Œåº”è¯¥æ›´æ–°æœ¬åœ°å­˜å‚¨ä¸­çš„é—®é¢˜æ•°æ®
   };
 
-  // ¿ªÊ¼»Ø´ğÎÊÌâ
+  // å¼€å§‹å›ç­”é—®é¢˜
   const startAnswering = (question: any) => {
     navigation.navigate('QuestionAnswer', { question });
   };
@@ -84,14 +84,14 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Appbar.Header>
-        <Appbar.Content title="ÎÊÌâ¿â" />
+        <Appbar.Content title="é—®é¢˜åº“" />
         <Appbar.Action icon="account-details" onPress={() => navigation.navigate('PersonalProfile')} />
       </Appbar.Header>
 
       <ScrollView style={styles.content}>
-        {/* ·ÖÀàÉ¸Ñ¡ */}
+        {/* åˆ†ç±»ç­›é€‰ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ÎÊÌâ·ÖÀà</Text>
+          <Text style={styles.sectionTitle}>é—®é¢˜åˆ†ç±»</Text>
           <View style={styles.chipContainer}>
             <TouchableOpacity onPress={() => setSelectedCategory(null)}>
               <Chip 
@@ -99,7 +99,7 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
                 selected={selectedCategory === null}
                 style={styles.categoryChip}
               >
-                È«²¿
+                å…¨éƒ¨
               </Chip>
             </TouchableOpacity>
             {categories.map((category) => (
@@ -119,14 +119,14 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
           </View>
         </Card>
 
-        {/* Ã¿ÈÕÍÆ¼ö */}
+        {/* æ¯æ—¥æ¨è */}
         <Card style={styles.section}>
           <View style={styles.headerRow}>
-            <Text style={styles.sectionTitle}>Ã¿ÈÕÍÆ¼ö</Text>
+            <Text style={styles.sectionTitle}>æ¯æ—¥æ¨è</Text>
             <IconButton 
               icon="refresh" 
               size={20} 
-              onPress={() => console.log('Ë¢ĞÂÍÆ¼ö')}
+              onPress={() => console.log('åˆ·æ–°æ¨è')}
             />
           </View>
           <TouchableOpacity onPress={() => startAnswering(questions[0])}>
@@ -139,7 +139,7 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
                 />
                 {questions[0].isAnswered && (
                   <Chip icon="check" mode="outlined" style={styles.answeredChip}>
-                    ÒÑ»Ø´ğ
+                    å·²å›ç­”
                   </Chip>
                 )}
               </View>
@@ -147,9 +147,9 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
           </TouchableOpacity>
         </Card>
 
-        {/* ÎÊÌâÁĞ±í */}
+        {/* é—®é¢˜åˆ—è¡¨ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ËùÓĞÎÊÌâ</Text>
+          <Text style={styles.sectionTitle}>æ‰€æœ‰é—®é¢˜</Text>
           {filteredQuestions.map((question) => (
             <View key={question.id}>
               <View style={styles.questionItem}>
@@ -165,7 +165,7 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
                     />
                     {question.isAnswered && (
                       <Chip icon="check" mode="outlined" style={styles.answeredChip}>
-                        ÒÑ»Ø´ğ
+                        å·²å›ç­”
                       </Chip>
                     )}
                   </View>
@@ -181,14 +181,14 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
           ))}
         </Card>
 
-        {/* Ìí¼Ó×Ô¶¨ÒåÎÊÌâ°´Å¥ */}
+        {/* æ·»åŠ è‡ªå®šä¹‰é—®é¢˜æŒ‰é’® */}
         <Button 
           mode="outlined" 
           onPress={() => navigation.navigate('CustomQuestion')}
           style={styles.addButton}
           icon="plus"
         >
-          Ìí¼Ó×Ô¶¨ÒåÎÊÌâ
+          æ·»åŠ è‡ªå®šä¹‰é—®é¢˜
         </Button>
       </ScrollView>
     </View>

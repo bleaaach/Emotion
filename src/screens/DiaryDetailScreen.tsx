@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Appbar, Button, Chip, Divider } from 'react-native-paper';
-import EmotionChip from '../components/EmotionChip';
-import Card from '../components/Card';
+import EmotionChip from '../../components/EmotionChip';
+import Card from '../../components/Card';
+import diaryService, { DiaryEntry } from '../services/DiaryService';
 
-const DiaryDetailScreen = ({ navigation, route }: any) => {
+const DiaryDetailScreen = ({ navigation, route }: { navigation: any, route: any }) => {
   const { diary } = route.params || {};
   
-  // ±íµ¥×´Ì¬
+  // è¡¨å•çŠ¶æ€
   const [situation, setSituation] = useState({
     time: diary?.situation?.time || '',
     location: diary?.situation?.location || '',
@@ -22,21 +23,21 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
   const [behavior, setBehavior] = useState(diary?.behavior || '');
   const [result, setResult] = useState(diary?.result || '');
   
-  // ÇéĞ÷Ñ¡Ïî
+  // æƒ…ç»ªé€‰é¡¹
   const emotionOptions = [
-    { id: 1, name: '½¹ÂÇ', color: '#FF6B6B' },
-    { id: 2, name: '·ßÅ­', color: '#FF8E53' },
-    { id: 3, name: '±¯ÉË', color: '#4A90E2' },
-    { id: 4, name: '¾ÚÉ¥', color: '#556CD6' },
-    { id: 5, name: '¹Â¶À', color: '#9B59B6' },
-    { id: 6, name: 'ĞßÀ¢', color: '#E91E63' },
-    { id: 7, name: '¿Ö¾å', color: '#26C6DA' },
-    { id: 8, name: '¼µ¶Ê', color: '#4CAF50' },
-    { id: 9, name: 'ĞË·Ü', color: '#FFEB3B' },
-    { id: 10, name: 'Æ½¾²', color: '#8BC34A' }
+    { id: 1, name: 'ç„¦è™‘', color: '#FF6B6B' },
+    { id: 2, name: 'æ„¤æ€’', color: '#FF8E53' },
+    { id: 3, name: 'æ‚²ä¼¤', color: '#4A90E2' },
+    { id: 4, name: 'æ²®ä¸§', color: '#556CD6' },
+    { id: 5, name: 'å­¤ç‹¬', color: '#9B59B6' },
+    { id: 6, name: 'ç¾æ„§', color: '#E91E63' },
+    { id: 7, name: 'ææƒ§', color: '#26C6DA' },
+    { id: 8, name: 'å«‰å¦’', color: '#4CAF50' },
+    { id: 9, name: 'å…´å¥‹', color: '#FFEB3B' },
+    { id: 10, name: 'å¹³é™', color: '#8BC34A' }
   ];
   
-  // ÇĞ»»ÇéĞ÷Ñ¡Ôñ
+  // åˆ‡æ¢æƒ…ç»ªé€‰æ‹©
   const toggleEmotion = (emotion: any) => {
     const isSelected = emotions.find((e: any) => e.id === emotion.id);
     if (isSelected) {
@@ -46,54 +47,62 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
     }
   };
   
-  // ±£´æÈÕ¼Ç
-  const saveDiary = () => {
-    const diaryData = {
-      id: diary?.id || Date.now(),
-      date: diary?.date || new Date().toISOString(),
-      situation,
-      emotions,
-      automaticThoughts,
-      automaticThoughtsBelief,
-      alternativeThoughts,
-      alternativeThoughtsBelief,
-      behavior,
-      result
-    };
-    
-    // ÕâÀïÓ¦¸Ã±£´æµ½±¾µØ´æ´¢»ò·¢ËÍµ½·şÎñÆ÷
-    console.log('±£´æÈÕ¼Ç:', diaryData);
-    Alert.alert('³É¹¦', 'ÈÕ¼ÇÒÑ±£´æ');
-    navigation.goBack();
+  // ä¿å­˜æ—¥è®°
+  const saveDiary = async () => {
+    try {
+      const diaryData: any = {
+        id: diary?.id || Date.now().toString(),
+        date: diary?.date || new Date().toISOString(),
+        situation,
+        emotions,
+        automaticThoughts,
+        automaticThoughtsBelief,
+        alternativeThoughts,
+        alternativeThoughtsBelief,
+        behavior,
+        result,
+        // æ·»åŠ ç¼ºå¤±çš„å­—æ®µä»¥åŒ¹é…DiaryEntryæ¥å£
+        emotionType: emotions.length > 0 ? emotions[0].name : 'å¹³é™',
+        title: situation.description.substring(0, 20) || 'æœªå‘½åæ—¥è®°',
+        excerpt: situation.description.substring(0, 50) || 'æš‚æ— æè¿°'
+      };
+      
+      await diaryService.saveEntry(diaryData);
+      Alert.alert('æˆåŠŸ', 'æ—¥è®°å·²ä¿å­˜');
+      navigation.goBack();
+    } catch (error) {
+      console.error('ä¿å­˜æ—¥è®°å¤±è´¥:', error);
+      Alert.alert('é”™è¯¯', 'ä¿å­˜æ—¥è®°å¤±è´¥');
+    }
   };
   
   return (
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title={diary ? "±à¼­ÈÕ¼Ç" : "ĞÂ½¨ÈÕ¼Ç"} />
+        <Appbar.Content title={diary ? "ç¼–è¾‘æ—¥è®°" : "æ–°å»ºæ—¥è®°"} />
         <Appbar.Action icon="content-save" onPress={saveDiary} />
       </Appbar.Header>
       
       <ScrollView style={styles.content}>
-        {/* Çé¾³¼ÇÂ¼ÇøÓò */}
+        {/* æƒ…å¢ƒè®°å½•åŒºåŸŸ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>Çé¾³¼ÇÂ¼</Text>
+          <Text style={styles.sectionTitle}>æƒ…å¢ƒè®°å½•</Text>
           <TextInput
             style={styles.input}
-            placeholder="Ê±¼ä"
+            placeholder="æ—¶é—´"
             value={situation.time}
             onChangeText={(text) => setSituation({...situation, time: text})}
           />
           <TextInput
             style={styles.input}
-            placeholder="µØµã"
+            placeholder="åœ°ç‚¹"
             value={situation.location}
             onChangeText={(text) => setSituation({...situation, location: text})}
           />
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="Çé¾³ÃèÊö"
+            placeholder="æƒ…å¢ƒæè¿°"
             multiline
             numberOfLines={4}
             value={situation.description}
@@ -101,9 +110,9 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
           />
         </Card>
         
-        {/* ÇéĞ÷¼ÇÂ¼ÇøÓò */}
+        {/* æƒ…ç»ªè®°å½•åŒºåŸŸ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ÇéĞ÷¼ÇÂ¼</Text>
+          <Text style={styles.sectionTitle}>æƒ…ç»ªè®°å½•</Text>
           <View style={styles.chipContainer}>
             {emotionOptions.map((emotion) => (
               <TouchableOpacity
@@ -112,35 +121,36 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
               >
                 <EmotionChip
                   emotion={emotion.name}
-                  color={emotion.color}
                   selected={!!emotions.find((e: any) => e.id === emotion.id)}
-                />
+                >
+                  {emotion.name}
+                </EmotionChip>
               </TouchableOpacity>
             ))}
           </View>
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="ÉíÌå¸ĞÊÜÃèÊö"
+            placeholder="èº«ä½“æ„Ÿå—æè¿°"
             multiline
             numberOfLines={3}
-            value={emotions.map(e => e.name).join(', ')}
+            value={emotions.map((e: any) => e.name).join(', ')}
             editable={false}
           />
         </Card>
         
-        {/* ×Ô¶¯Ë¼Î¬¼ÇÂ¼ÇøÓò */}
+        {/* è‡ªåŠ¨æ€ç»´è®°å½•åŒºåŸŸ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>×Ô¶¯Ë¼Î¬</Text>
+          <Text style={styles.sectionTitle}>è‡ªåŠ¨æ€ç»´</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="Ğ´ÏÂÄãµÄ×Ô¶¯Ë¼Î¬..."
+            placeholder="å†™ä¸‹ä½ çš„è‡ªåŠ¨æ€ç»´..."
             multiline
             numberOfLines={4}
             value={automaticThoughts}
             onChangeText={setAutomaticThoughts}
           />
           <View style={styles.beliefContainer}>
-            <Text>¿ÉĞÅ¶È: {automaticThoughtsBelief}%</Text>
+            <Text>å¯ä¿¡åº¦: {automaticThoughtsBelief}%</Text>
             <View style={styles.sliderContainer}>
               <Text>0</Text>
               <View style={styles.sliderTrack}>
@@ -156,19 +166,19 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
           </View>
         </Card>
         
-        {/* Ìæ´úË¼Î¬ÇøÓò */}
+        {/* æ›¿ä»£æ€ç»´åŒºåŸŸ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>Ìæ´úË¼Î¬</Text>
+          <Text style={styles.sectionTitle}>æ›¿ä»£æ€ç»´</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="Ğ´ÏÂ¸üÆ½ºâ¡¢ÀíĞÔµÄÏë·¨..."
+            placeholder="å†™ä¸‹æ›´å¹³è¡¡ã€ç†æ€§çš„æƒ³æ³•..."
             multiline
             numberOfLines={4}
             value={alternativeThoughts}
             onChangeText={setAlternativeThoughts}
           />
           <View style={styles.beliefContainer}>
-            <Text>ĞÂµÄ¿ÉĞÅ¶È: {alternativeThoughtsBelief}%</Text>
+            <Text>æ–°çš„å¯ä¿¡åº¦: {alternativeThoughtsBelief}%</Text>
             <View style={styles.sliderContainer}>
               <Text>0</Text>
               <View style={styles.sliderTrack}>
@@ -184,12 +194,12 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
           </View>
         </Card>
         
-        {/* ĞĞÎª½á¹û¼ÇÂ¼ */}
+        {/* è¡Œä¸ºç»“æœè®°å½• */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ĞĞÎªÓë½á¹û</Text>
+          <Text style={styles.sectionTitle}>è¡Œä¸ºä¸ç»“æœ</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="Êµ¼ÊĞĞÎªÃèÊö"
+            placeholder="å®é™…è¡Œä¸ºæè¿°"
             multiline
             numberOfLines={3}
             value={behavior}
@@ -197,7 +207,7 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
           />
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="½á¹ûÆÀ¼Û"
+            placeholder="ç»“æœè¯„ä»·"
             multiline
             numberOfLines={3}
             value={result}
@@ -210,7 +220,7 @@ const DiaryDetailScreen = ({ navigation, route }: any) => {
           onPress={saveDiary}
           style={styles.saveButton}
         >
-          ±£´æÈÕ¼Ç
+          ä¿å­˜æ—¥è®°
         </Button>
       </ScrollView>
     </View>

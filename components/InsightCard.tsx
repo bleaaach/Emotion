@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { IconButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import Card from './Card';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface InsightCardProps {
   title: string;
@@ -31,14 +30,6 @@ const InsightCard: React.FC<InsightCardProps> = ({
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.contentText}>{content}</Text>
         </View>
-        {onDismiss && (
-          <IconButton 
-            icon="close" 
-            size={20} 
-            onPress={onDismiss}
-            style={styles.dismissButton}
-          />
-        )}
       </View>
     </Card>
   );
@@ -46,8 +37,7 @@ const InsightCard: React.FC<InsightCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 8,
-    marginHorizontal: 16,
+    marginBottom: 12,
     padding: 16,
   },
   content: {
@@ -73,9 +63,6 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 14,
     color: '#666666',
-  },
-  dismissButton: {
-    margin: 0,
   },
 });
 

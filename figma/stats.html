@@ -33,11 +33,49 @@
         .stat-item:last-child {
             border-bottom: none;
         }
+        
+        .time-selector {
+            display: flex;
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-option {
+            flex: 1;
+            text-align: center;
+            padding: 6px 0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .time-option.active {
+            background: white;
+            font-weight: bold;
+        }
+        
+        .badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+        }
     </style>
 </head>
 <body class="h-full overflow-y-auto">
     <!-- 头部 -->
-    <div class="text-xl font-bold mb-6">数据统计</div>
+    <div class="flex justify-between items-center mb-6">
+        <div class="text-xl font-bold">数据统计</div>
+        <div class="time-selector">
+            <div class="time-option">周</div>
+            <div class="time-option active">月</div>
+            <div class="time-option">季度</div>
+            <div class="time-option">年</div>
+        </div>
+    </div>
 
     <!-- 情绪分布 -->
     <div class="card p-4 mb-6">
@@ -62,6 +100,37 @@
             <div class="flex flex-col items-center">
                 <div class="w-8 bg-red-200 rounded-t-lg" style="height: 50px;"></div>
                 <div class="text-xs mt-1">愤怒</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 思维模式分析 -->
+    <div class="card p-4 mb-6">
+        <div class="font-medium text-lg mb-4">思维模式分析</div>
+        <div class="flex justify-center mb-4">
+            <div class="relative w-48 h-48 rounded-full border-8 border-blue-200">
+                <div class="absolute inset-0 rounded-full border-8 border-green-200 transform -rotate-45" style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%);"></div>
+                <div class="absolute inset-0 rounded-full border-8 border-yellow-200 transform rotate-45" style="clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);"></div>
+                <div class="absolute inset-8 rounded-full bg-white flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="font-bold">思维模式</div>
+                        <div class="text-sm">分析结果</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 text-center">
+            <div>
+                <div class="font-bold text-blue-500">40%</div>
+                <div class="text-xs text-gray-500">灾难化思维</div>
+            </div>
+            <div>
+                <div class="font-bold text-green-500">35%</div>
+                <div class="text-xs text-gray-500">黑白思维</div>
+            </div>
+            <div>
+                <div class="font-bold text-yellow-500">25%</div>
+                <div class="text-xs text-gray-500">读心术</div>
             </div>
         </div>
     </div>
@@ -108,6 +177,19 @@
                 </div>
                 <div class="text-lg font-bold">8次</div>
             </div>
+            
+            <div class="stat-item">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-user-circle text-orange-500"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium">个人说明书</div>
+                        <div class="text-sm text-gray-500">本月已完成</div>
+                    </div>
+                </div>
+                <div class="text-lg font-bold">5项</div>
+            </div>
         </div>
     </div>
 
@@ -151,24 +233,51 @@
         <div class="font-medium text-lg mb-4">成就徽章</div>
         <div class="grid grid-cols-3 gap-4">
             <div class="flex flex-col items-center">
-                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
+                <div class="badge bg-yellow-100">
                     <i class="fas fa-award text-yellow-500 text-xl"></i>
                 </div>
-                <div class="text-xs text-center">连续记录7天</div>
+                <div class="text-xs text-center font-medium">连续记录7天</div>
+                <div class="text-xs text-gray-500 text-center">2023.06.15获得</div>
             </div>
             
             <div class="flex flex-col items-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                <div class="badge bg-blue-100">
                     <i class="fas fa-feather text-blue-500 text-xl"></i>
                 </div>
-                <div class="text-xs text-center">思维重构大师</div>
+                <div class="text-xs text-center font-medium">思维重构大师</div>
+                <div class="text-xs text-gray-500 text-center">2023.05.22获得</div>
             </div>
             
             <div class="flex flex-col items-center">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-2">
+                <div class="badge bg-green-100">
                     <i class="fas fa-seedling text-green-500 text-xl"></i>
                 </div>
-                <div class="text-xs text-center">情绪管理专家</div>
+                <div class="text-xs text-center font-medium">情绪管理专家</div>
+                <div class="text-xs text-gray-500 text-center">2023.04.10获得</div>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <div class="badge bg-purple-100">
+                    <i class="fas fa-user-circle text-purple-500 text-xl"></i>
+                </div>
+                <div class="text-xs text-center font-medium">自我探索者</div>
+                <div class="text-xs text-gray-500 text-center">2023.03.18获得</div>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <div class="badge bg-orange-100">
+                    <i class="fas fa-dumbbell text-orange-500 text-xl"></i>
+                </div>
+                <div class="text-xs text-center font-medium">练习达人</div>
+                <div class="text-xs text-gray-500 text-center">2023.02.28获得</div>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <div class="badge bg-gray-100" style="opacity: 0.5;">
+                    <i class="fas fa-lock text-gray-400 text-xl"></i>
+                </div>
+                <div class="text-xs text-center font-medium text-gray-400">待解锁</div>
+                <div class="text-xs text-gray-400 text-center">完成更多练习</div>
             </div>
         </div>
     </div>

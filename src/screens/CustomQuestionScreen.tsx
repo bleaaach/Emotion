@@ -5,37 +5,37 @@ import Card from '../components/Card';
 import EmotionChip from '../components/EmotionChip';
 
 const CustomQuestionScreen = ({ navigation }: any) => {
-  // ±íµ¥×´Ì¬
+  // è¡¨å•çŠ¶æ€
   const [question, setQuestion] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState('');
   
-  // ÎÊÌâ·ÖÀà
+  // é—®é¢˜åˆ†ç±»
   const categories = [
-    { id: 1, name: '×ÔÎÒÈÏÖª', color: '#FF6B6B' },
-    { id: 2, name: '¼ÛÖµ¹Û', color: '#4ECDC4' },
-    { id: 3, name: 'ÈË¼Ê¹ØÏµ', color: '#45B7D1' },
-    { id: 4, name: 'ÇéÐ÷¹ÜÀí', color: '#96CEB4' },
-    { id: 5, name: 'Ä¿±êÓëÃÎÏë', color: '#FFEAA7' },
-    { id: 6, name: '³É³¤¾­Àú', color: '#DDA0DD' }
+    { id: 1, name: 'è‡ªæˆ‘è®¤çŸ¥', color: '#FF6B6B' },
+    { id: 2, name: 'ä»·å€¼è§‚', color: '#4ECDC4' },
+    { id: 3, name: 'äººé™…å…³ç³»', color: '#45B7D1' },
+    { id: 4, name: 'æƒ…ç»ªç®¡ç†', color: '#96CEB4' },
+    { id: 5, name: 'ç›®æ ‡ä¸Žæ¢¦æƒ³', color: '#FFEAA7' },
+    { id: 6, name: 'æˆé•¿ç»åŽ†', color: '#DDA0DD' }
   ];
   
-  // ±£´æ×Ô¶¨ÒåÎÊÌâ
+  // ä¿å­˜è‡ªå®šä¹‰é—®é¢˜
   const saveCustomQuestion = () => {
     if (!question.trim()) {
-      Alert.alert('ÌáÊ¾', 'ÇëÊäÈëÎÊÌâÄÚÈÝ');
+      Alert.alert('æç¤º', 'è¯·è¾“å…¥é—®é¢˜å†…å®¹');
       return;
     }
     
     if (!selectedCategory && !newCategory.trim()) {
-      Alert.alert('ÌáÊ¾', 'ÇëÑ¡Ôñ»òÊäÈëÎÊÌâ·ÖÀà');
+      Alert.alert('æç¤º', 'è¯·é€‰æ‹©æˆ–è¾“å…¥é—®é¢˜åˆ†ç±»');
       return;
     }
     
     const category = newCategory.trim() || selectedCategory;
     
     const customQuestion = {
-      id: Date.now(), // ¼òµ¥µÄIDÉú³É
+      id: Date.now(), // ç®€å•çš„IDç”Ÿæˆ
       title: question,
       category: category,
       isFavorite: false,
@@ -43,9 +43,9 @@ const CustomQuestionScreen = ({ navigation }: any) => {
       isCustom: true
     };
     
-    // ÕâÀïÓ¦¸Ã±£´æµ½±¾µØ´æ´¢
-    console.log('±£´æ×Ô¶¨ÒåÎÊÌâ:', customQuestion);
-    Alert.alert('³É¹¦', '×Ô¶¨ÒåÎÊÌâÒÑ±£´æ');
+    // è¿™é‡Œåº”è¯¥ä¿å­˜åˆ°æœ¬åœ°å­˜å‚¨
+    console.log('ä¿å­˜è‡ªå®šä¹‰é—®é¢˜:', customQuestion);
+    Alert.alert('æˆåŠŸ', 'è‡ªå®šä¹‰é—®é¢˜å·²ä¿å­˜');
     navigation.goBack();
   };
   
@@ -53,16 +53,16 @@ const CustomQuestionScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Ìí¼Ó×Ô¶¨ÒåÎÊÌâ" />
+        <Appbar.Content title="æ·»åŠ è‡ªå®šä¹‰é—®é¢˜" />
       </Appbar.Header>
       
       <ScrollView style={styles.content}>
-        {/* ÎÊÌâÄÚÈÝ */}
+        {/* é—®é¢˜å†…å®¹ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ÎÊÌâÄÚÈÝ</Text>
+          <Text style={styles.sectionTitle}>é—®é¢˜å†…å®¹</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder="ÇëÊäÈëÄãµÄÎÊÌâ..."
+            placeholder="è¯·è¾“å…¥ä½ çš„é—®é¢˜..."
             multiline
             numberOfLines={4}
             textAlignVertical="top"
@@ -71,10 +71,10 @@ const CustomQuestionScreen = ({ navigation }: any) => {
           />
         </Card>
         
-        {/* ÎÊÌâ·ÖÀà */}
+        {/* é—®é¢˜åˆ†ç±» */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ÎÊÌâ·ÖÀà</Text>
-          <Text style={styles.subtitle}>Ñ¡ÔñÏÖÓÐ·ÖÀà</Text>
+          <Text style={styles.sectionTitle}>é—®é¢˜åˆ†ç±»</Text>
+          <Text style={styles.subtitle}>é€‰æ‹©çŽ°æœ‰åˆ†ç±»</Text>
           <View style={styles.chipContainer}>
             {categories.map((category) => (
               <Chip
@@ -92,11 +92,11 @@ const CustomQuestionScreen = ({ navigation }: any) => {
             ))}
           </View>
           
-          <Text style={[styles.subtitle, { marginTop: 16 }]}>»ò´´½¨ÐÂ·ÖÀà</Text>
+          <Text style={[styles.subtitle, { marginTop: 16 }]}>æˆ–åˆ›å»ºæ–°åˆ†ç±»</Text>
           <View style={styles.newCategoryContainer}>
             <TextInput
               style={styles.input}
-              placeholder="ÊäÈëÐÂ·ÖÀàÃû³Æ"
+              placeholder="è¾“å…¥æ–°åˆ†ç±»åç§°"
               value={newCategory}
               onChangeText={setNewCategory}
             />
@@ -109,30 +109,30 @@ const CustomQuestionScreen = ({ navigation }: any) => {
               }}
               disabled={!newCategory.trim()}
             >
-              Ê¹ÓÃÐÂ·ÖÀà
+              ä½¿ç”¨æ–°åˆ†ç±»
             </Button>
           </View>
         </Card>
         
-        {/* ÌáÊ¾ÐÅÏ¢ */}
+        {/* æç¤ºä¿¡æ¯ */}
         <Card style={styles.section}>
-          <Text style={styles.tipTitle}>? Ð¡ÌùÊ¿</Text>
+          <Text style={styles.tipTitle}>? å°è´´å£«</Text>
           <Text style={styles.tipText}>
-            ? ºÃµÄÎÊÌâÓ¦¸ÃÊÇ¿ª·ÅÐÔµÄ£¬ÄÜ¹»Òý·¢ÉîÈëË¼¿¼{"\n"}
-            ? ¾¡Á¿ÈÃÎÊÌâÓëÄãµÄ¸öÈË³É³¤ºÍÄÚÐÄÌ½Ë÷Ïà¹Ø{"\n"}
-            ? ¿ÉÒÔ´Ó"Ê²Ã´"¡¢"ÈçºÎ"¡¢"ÎªÊ²Ã´"µÈ½Ç¶ÈÀ´Éè¼ÆÎÊÌâ
+            ? å¥½çš„é—®é¢˜åº”è¯¥æ˜¯å¼€æ”¾æ€§çš„ï¼Œèƒ½å¤Ÿå¼•å‘æ·±å…¥æ€è€ƒ{"\n"}
+            ? å°½é‡è®©é—®é¢˜ä¸Žä½ çš„ä¸ªäººæˆé•¿å’Œå†…å¿ƒæŽ¢ç´¢ç›¸å…³{"\n"}
+            ? å¯ä»¥ä»Ž"ä»€ä¹ˆ"ã€"å¦‚ä½•"ã€"ä¸ºä»€ä¹ˆ"ç­‰è§’åº¦æ¥è®¾è®¡é—®é¢˜
           </Text>
         </Card>
       </ScrollView>
       
-      {/* ±£´æ°´Å¥ */}
+      {/* ä¿å­˜æŒ‰é’® */}
       <View style={styles.buttonContainer}>
         <Button 
           mode="contained" 
           onPress={saveCustomQuestion}
           style={styles.saveButton}
         >
-          ±£´æÎÊÌâ
+          ä¿å­˜é—®é¢˜
         </Button>
       </View>
     </View>

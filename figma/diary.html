@@ -41,83 +41,359 @@
         .emotion-sad {
             background-color: #8b5cf6;
         }
+        
+        .tab-active {
+            color: #007AFF;
+            border-bottom: 2px solid #007AFF;
+        }
+        
+        .wizard-step {
+            display: none;
+        }
+        
+        .wizard-step.active {
+            display: block;
+        }
+        
+        .wizard-progress {
+            height: 4px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .wizard-progress-bar {
+            height: 100%;
+            background-color: #007AFF;
+            transition: width 0.3s ease;
+        }
+        
+        .emotion-chip {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f2f2f7;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .emotion-chip-active {
+            background: #007AFF;
+            color: white;
+        }
+        
+        .distortion-chip {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f2f2f7;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .distortion-chip-active {
+            background: #ff3b30;
+            color: white;
+        }
     </style>
 </head>
 <body class="h-full overflow-y-auto">
-    <!-- 头部 -->
-    <div class="flex justify-between items-center mb-6">
-        <div class="text-xl font-bold">情绪日记</div>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
-            <i class="fas fa-plus mr-1"></i> 新记录
-        </button>
+    <!-- 主页内容 -->
+    <div id="main-content">
+        <!-- 头部 -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="text-xl font-bold">情绪日记</div>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center" onclick="showWizard()">
+                <i class="fas fa-plus mr-1"></i> 新记录
+            </button>
+        </div>
+        
+        <!-- 标签页 -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <div class="py-2 px-4 tab-active">全部</div>
+            <div class="py-2 px-4">焦虑</div>
+            <div class="py-2 px-4">平静</div>
+            <div class="py-2 px-4">悲伤</div>
+        </div>
+
+        <!-- 日记列表 -->
+        <div class="diary-card">
+            <div class="emotion-indicator emotion-calm"></div>
+            <div class="flex-1">
+                <div class="font-medium mb-1">与朋友共进午餐</div>
+                <div class="text-sm text-gray-600 mb-2">今天和朋友在餐厅吃午饭，聊得很开心...</div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <div>平静 · 快乐</div>
+                    <div>今天 14:30</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diary-card">
+            <div class="emotion-indicator emotion-anxious"></div>
+            <div class="flex-1">
+                <div class="font-medium mb-1">工作压力</div>
+                <div class="text-sm text-gray-600 mb-2">项目截止日期临近，感到有些焦虑...</div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <div>焦虑 · 压力</div>
+                    <div>昨天 10:15</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diary-card">
+            <div class="emotion-indicator emotion-sad"></div>
+            <div class="flex-1">
+                <div class="font-medium mb-1">阴雨天</div>
+                <div class="text-sm text-gray-600 mb-2">连续几天的阴雨天气让心情有些低落...</div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <div>悲伤 · 孤独</div>
+                    <div>3月15日 18:40</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diary-card">
+            <div class="emotion-indicator emotion-calm"></div>
+            <div class="flex-1">
+                <div class="font-medium mb-1">晨间冥想</div>
+                <div class="text-sm text-gray-600 mb-2">今天尝试了10分钟的正念冥想，感觉内心平静...</div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <div>平静 · 专注</div>
+                    <div>3月14日 08:20</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="diary-card">
+            <div class="emotion-indicator emotion-anxious"></div>
+            <div class="flex-1">
+                <div class="font-medium mb-1">社交活动</div>
+                <div class="text-sm text-gray-600 mb-2">参加聚会时感到不自在，担心自己说错话...</div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <div>焦虑 · 自我怀疑</div>
+                    <div>3月13日 20:10</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增日记按钮 -->
+        <div class="fixed bottom-24 right-6">
+            <button class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center shadow-lg" onclick="showWizard()">
+                <i class="fas fa-plus text-white text-xl"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 日记创建向导 -->
+    <div id="diary-wizard" style="display: none;">
+        <!-- 向导头部 -->
+        <div class="flex justify-between items-center mb-6">
+            <button class="text-gray-500" onclick="hideWizard()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="text-xl font-bold">新建日记</div>
+            <button class="text-gray-500" onclick="hideWizard()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- 进度条 -->
+        <div class="wizard-progress mb-6">
+            <div class="wizard-progress-bar" id="wizard-progress" style="width: 20%"></div>
+        </div>
+        
+        <!-- 步骤指示器 -->
+        <div class="flex justify-between text-xs text-gray-500 mb-6">
+            <div>情境</div>
+            <div>情绪</div>
+            <div>自动思维</div>
+            <div>替代思维</div>
+            <div>认知扭曲</div>
+        </div>
+        
+        <!-- 步骤1: 情境记录 -->
+        <div class="wizard-step active" id="step1">
+            <div class="font-bold text-lg mb-4">情境记录</div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">时间</label>
+                <input type="time" class="w-full p-3 border border-gray-300 rounded-lg">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">地点</label>
+                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="在哪里发生的？">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">情境描述</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg h-32" placeholder="详细描述当时的情境..."></textarea>
+            </div>
+            <button class="w-full bg-blue-500 text-white py-3 rounded-lg font-medium" onclick="nextStep(2)">下一步</button>
+        </div>
+        
+        <!-- 步骤2: 情绪记录 -->
+        <div class="wizard-step" id="step2">
+            <div class="font-bold text-lg mb-4">情绪记录</div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">选择情绪</label>
+                <div class="flex flex-wrap">
+                    <div class="emotion-chip emotion-chip-active">平静</div>
+                    <div class="emotion-chip">快乐</div>
+                    <div class="emotion-chip">焦虑</div>
+                    <div class="emotion-chip">悲伤</div>
+                    <div class="emotion-chip">愤怒</div>
+                    <div class="emotion-chip">压力</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">情绪强度</label>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500 mr-2">1</span>
+                    <div class="flex-1">
+                        <input type="range" min="1" max="10" value="5" class="w-full">
+                    </div>
+                    <span class="text-sm text-gray-500 ml-2">10</span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">身体感受</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg" placeholder="描述身体上的感受..."></textarea>
+            </div>
+            <div class="flex">
+                <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-medium mr-2" onclick="prevStep(1)">上一步</button>
+                <button class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium" onclick="nextStep(3)">下一步</button>
+            </div>
+        </div>
+        
+        <!-- 步骤3: 自动思维记录 -->
+        <div class="wizard-step" id="step3">
+            <div class="font-bold text-lg mb-4">自动思维</div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">当时的想法</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg h-32" placeholder="描述当时脑海中出现的想法..."></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">思维可信度</label>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500 mr-2">0%</span>
+                    <div class="flex-1">
+                        <input type="range" min="0" max="100" value="80" class="w-full">
+                    </div>
+                    <span class="text-sm text-gray-500 ml-2">100%</span>
+                </div>
+            </div>
+            <div class="flex">
+                <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-medium mr-2" onclick="prevStep(2)">上一步</button>
+                <button class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium" onclick="nextStep(4)">下一步</button>
+            </div>
+        </div>
+        
+        <!-- 步骤4: 替代思维构建 -->
+        <div class="wizard-step" id="step4">
+            <div class="font-bold text-lg mb-4">替代思维</div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">更平衡的想法</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg h-32" placeholder="尝试用更平衡、客观的方式重新思考..."></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">新的可信度</label>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500 mr-2">0%</span>
+                    <div class="flex-1">
+                        <input type="range" min="0" max="100" value="40" class="w-full">
+                    </div>
+                    <span class="text-sm text-gray-500 ml-2">100%</span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">行为结果</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg" placeholder="描述你实际做了什么..."></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">结果评价</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg" placeholder="结果如何？你感觉怎么样？"></textarea>
+            </div>
+            <div class="flex">
+                <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-medium mr-2" onclick="prevStep(3)">上一步</button>
+                <button class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium" onclick="nextStep(5)">下一步</button>
+            </div>
+        </div>
+        
+        <!-- 步骤5: 认知扭曲识别 -->
+        <div class="wizard-step" id="step5">
+            <div class="font-bold text-lg mb-4">认知扭曲识别</div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">识别自动思维中的认知扭曲</label>
+                <div class="flex flex-wrap">
+                    <div class="distortion-chip distortion-chip-active">全有或全无思维</div>
+                    <div class="distortion-chip">灾难化思维</div>
+                    <div class="distortion-chip">情绪化推理</div>
+                    <div class="distortion-chip">预测未来</div>
+                    <div class="distortion-chip">放大负面</div>
+                    <div class="distortion-chip">贴标签</div>
+                    <div class="distortion-chip">读心术</div>
+                    <div class="distortion-chip">缩小正面</div>
+                    <div class="distortion-chip">责备他人</div>
+                    <div class="distortion-chip">过度概括</div>
+                    <div class="distortion-chip">自我责备</div>
+                    <div class="distortion-chip">应该陈述</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">扭曲程度评估</label>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500 mr-2">低</span>
+                    <div class="flex-1">
+                        <input type="range" min="1" max="10" value="7" class="w-full">
+                    </div>
+                    <span class="text-sm text-gray-500 ml-2">高</span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">改进建议</label>
+                <textarea class="w-full p-3 border border-gray-300 rounded-lg" placeholder="系统生成的认知重构建议...">这个想法可能存在灾难化思维的倾向，将一次工作挑战放大为无法胜任整个工作的证据。建议关注具体事实：您已经完成了其他项目，这次只是需要更多时间来解决特定问题。</textarea>
+            </div>
+            <div class="flex">
+                <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-medium mr-2" onclick="prevStep(4)">上一步</button>
+                <button class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium" onclick="finishWizard()">完成</button>
+            </div>
+        </div>
     </div>
 
-    <!-- 日记列表 -->
-    <div class="diary-card">
-        <div class="emotion-indicator emotion-calm"></div>
-        <div class="flex-1">
-            <div class="font-medium mb-1">与朋友共进午餐</div>
-            <div class="text-sm text-gray-600 mb-2">今天和朋友在餐厅吃午饭，聊得很开心...</div>
-            <div class="flex justify-between text-xs text-gray-500">
-                <div>平静 · 快乐</div>
-                <div>今天 14:30</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="diary-card">
-        <div class="emotion-indicator emotion-anxious"></div>
-        <div class="flex-1">
-            <div class="font-medium mb-1">工作压力</div>
-            <div class="text-sm text-gray-600 mb-2">项目截止日期临近，感到有些焦虑...</div>
-            <div class="flex justify-between text-xs text-gray-500">
-                <div>焦虑 · 压力</div>
-                <div>昨天 10:15</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="diary-card">
-        <div class="emotion-indicator emotion-sad"></div>
-        <div class="flex-1">
-            <div class="font-medium mb-1">阴雨天</div>
-            <div class="text-sm text-gray-600 mb-2">连续几天的阴雨天气让心情有些低落...</div>
-            <div class="flex justify-between text-xs text-gray-500">
-                <div>悲伤 · 孤独</div>
-                <div>3月15日 18:40</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="diary-card">
-        <div class="emotion-indicator emotion-calm"></div>
-        <div class="flex-1">
-            <div class="font-medium mb-1">晨间冥想</div>
-            <div class="text-sm text-gray-600 mb-2">今天尝试了10分钟的正念冥想，感觉内心平静...</div>
-            <div class="flex justify-between text-xs text-gray-500">
-                <div>平静 · 专注</div>
-                <div>3月14日 08:20</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="diary-card">
-        <div class="emotion-indicator emotion-anxious"></div>
-        <div class="flex-1">
-            <div class="font-medium mb-1">社交活动</div>
-            <div class="text-sm text-gray-600 mb-2">参加聚会时感到不自在，担心自己说错话...</div>
-            <div class="flex justify-between text-xs text-gray-500">
-                <div>焦虑 · 自我怀疑</div>
-                <div>3月13日 20:10</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 新增日记按钮 -->
-    <div class="fixed bottom-24 right-6">
-        <button class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
-            <i class="fas fa-plus text-white text-xl"></i>
-        </button>
-    </div>
+    <script>
+        function showWizard() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('diary-wizard').style.display = 'block';
+        }
+        
+        function hideWizard() {
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('diary-wizard').style.display = 'none';
+        }
+        
+        function nextStep(step) {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('step' + step).classList.add('active');
+            // 更新进度条 - 现在有5个步骤，所以乘以20%
+            document.getElementById('wizard-progress').style.width = (step * 20) + '%';
+        }
+        
+        function prevStep(step) {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('step' + step).classList.add('active');
+            // 更新进度条 - 现在有5个步骤，所以乘以20%
+            document.getElementById('wizard-progress').style.width = (step * 20) + '%';
+        }
+        
+        function finishWizard() {
+            alert('日记创建成功！');
+            hideWizard();
+        }
+    </script>
 </body>
 </html>

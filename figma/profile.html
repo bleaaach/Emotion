@@ -28,6 +28,22 @@
             margin-right: 16px;
             color: #007AFF;
         }
+        
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .insight-card {
+            display: flex;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
 <body class="h-full overflow-y-auto">
@@ -56,6 +72,55 @@
         <div class="flex-1 text-center">
             <div class="text-lg font-bold">86</div>
             <div class="text-xs text-gray-500">使用天数</div>
+        </div>
+    </div>
+
+    <!-- AI洞察 -->
+    <div class="p-4">
+        <div class="font-medium text-lg mb-4">AI洞察</div>
+        <div class="insight-card">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                <i class="fas fa-lightbulb text-blue-500"></i>
+            </div>
+            <div>
+                <div class="font-medium mb-1">您本周的焦虑情绪有所下降</div>
+                <div class="text-sm text-gray-600">与上周相比，您的焦虑情绪减少了15%。继续保持记录和练习！</div>
+            </div>
+        </div>
+        
+        <div class="insight-card">
+            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                <i class="fas fa-chart-line text-purple-500"></i>
+            </div>
+            <div>
+                <div class="font-medium mb-1">思维模式分析</div>
+                <div class="text-sm text-gray-600">您倾向于使用"黑白思维"模式，建议尝试更灵活的思考方式。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 个人说明书进度 -->
+    <div class="p-4">
+        <div class="font-medium text-lg mb-4">个人说明书</div>
+        <div class="card p-4 mb-4">
+            <div class="flex justify-between items-center mb-3">
+                <div class="font-medium">探索进度</div>
+                <div class="text-sm text-gray-500">12/20</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                <div class="bg-blue-600 h-2 rounded-full" style="width: 60%"></div>
+            </div>
+            <div class="text-sm text-gray-600">完成更多问题以解锁完整个人档案</div>
+        </div>
+        
+        <!-- 每日推荐问题 -->
+        <div class="card p-4">
+            <div class="font-medium mb-3">今日推荐问题</div>
+            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                <div class="font-medium mb-2">描述一次你感到特别自豪的经历</div>
+                <div class="text-sm text-gray-600">这个问题将帮助你更好地认识自己的优势和价值</div>
+            </div>
+            <button class="w-full bg-blue-500 text-white py-3 rounded-lg font-medium">开始回答</button>
         </div>
     </div>
 

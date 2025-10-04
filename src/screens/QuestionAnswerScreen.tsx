@@ -7,15 +7,15 @@ import EmotionChip from '../components/EmotionChip';
 const QuestionAnswerScreen = ({ navigation, route }: any) => {
   const { question } = route.params || {};
   
-  // »Ø´ğ×´Ì¬
+  // å›ç­”çŠ¶æ€
   const [answer, setAnswer] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
   
-  // Ê¾Àı±êÇ©
-  const suggestedTags = ['³É³¤', '¼ÛÖµ¹Û', '×ÔÎÒÈÏÖª', 'ÈË¼Ê¹ØÏµ', 'ÇéĞ÷', 'Ä¿±ê'];
+  // ç¤ºä¾‹æ ‡ç­¾
+  const suggestedTags = ['æˆé•¿', 'ä»·å€¼è§‚', 'è‡ªæˆ‘è®¤çŸ¥', 'äººé™…å…³ç³»', 'æƒ…ç»ª', 'ç›®æ ‡'];
   
-  // Ìí¼Ó±êÇ©
+  // æ·»åŠ æ ‡ç­¾
   const addTag = (tag: string) => {
     if (tag && !tags.includes(tag)) {
       setTags([...tags, tag]);
@@ -23,15 +23,15 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
     }
   };
   
-  // É¾³ı±êÇ©
+  // åˆ é™¤æ ‡ç­¾
   const removeTag = (tag: string) => {
     setTags(tags.filter(t => t !== tag));
   };
   
-  // ±£´æ»Ø´ğ
+  // ä¿å­˜å›ç­”
   const saveAnswer = () => {
     if (!answer.trim()) {
-      Alert.alert('ÌáÊ¾', 'ÇëÌîĞ´»Ø´ğÄÚÈİ');
+      Alert.alert('æç¤º', 'è¯·å¡«å†™å›ç­”å†…å®¹');
       return;
     }
     
@@ -43,9 +43,9 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
       date: new Date().toISOString()
     };
     
-    // ÕâÀïÓ¦¸Ã±£´æµ½±¾µØ´æ´¢
-    console.log('±£´æ»Ø´ğ:', answerData);
-    Alert.alert('³É¹¦', '»Ø´ğÒÑ±£´æ');
+    // è¿™é‡Œåº”è¯¥ä¿å­˜åˆ°æœ¬åœ°å­˜å‚¨
+    console.log('ä¿å­˜å›ç­”:', answerData);
+    Alert.alert('æˆåŠŸ', 'å›ç­”å·²ä¿å­˜');
     navigation.goBack();
   };
   
@@ -53,11 +53,11 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="»Ø´ğÎÊÌâ" />
+        <Appbar.Content title="å›ç­”é—®é¢˜" />
       </Appbar.Header>
       
       <ScrollView style={styles.content}>
-        {/* ÎÊÌâÕ¹Ê¾ */}
+        {/* é—®é¢˜å±•ç¤º */}
         <Card style={styles.section}>
           <Text style={styles.questionTitle}>{question?.title}</Text>
           <View style={styles.questionMeta}>
@@ -67,18 +67,18 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
             />
             {question?.isAnswered && (
               <Chip icon="history" mode="outlined" style={styles.historyChip}>
-                ²é¿´ÀúÊ·»Ø´ğ
+                æŸ¥çœ‹å†å²å›ç­”
               </Chip>
             )}
           </View>
         </Card>
         
-        {/* »Ø´ğ±à¼­Æ÷ */}
+        {/* å›ç­”ç¼–è¾‘å™¨ */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>ÄãµÄ»Ø´ğ</Text>
+          <Text style={styles.sectionTitle}>ä½ çš„å›ç­”</Text>
           <TextInput
             style={[styles.textArea, styles.answerInput]}
-            placeholder="ÔÚÕâÀïĞ´ÏÂÄãµÄÏë·¨ºÍ¸ĞÊÜ..."
+            placeholder="åœ¨è¿™é‡Œå†™ä¸‹ä½ çš„æƒ³æ³•å’Œæ„Ÿå—..."
             multiline
             numberOfLines={10}
             textAlignVertical="top"
@@ -87,13 +87,13 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
           />
         </Card>
         
-        {/* ±êÇ©Ìí¼Ó */}
+        {/* æ ‡ç­¾æ·»åŠ  */}
         <Card style={styles.section}>
-          <Text style={styles.sectionTitle}>Ìí¼Ó±êÇ©</Text>
+          <Text style={styles.sectionTitle}>æ·»åŠ æ ‡ç­¾</Text>
           <View style={styles.tagInputContainer}>
             <TextInput
               style={styles.tagInput}
-              placeholder="ÊäÈë±êÇ©"
+              placeholder="è¾“å…¥æ ‡ç­¾"
               value={newTag}
               onChangeText={setNewTag}
               onSubmitEditing={() => addTag(newTag)}
@@ -103,13 +103,13 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
               onPress={() => addTag(newTag)}
               style={styles.addTagButton}
             >
-              Ìí¼Ó
+              æ·»åŠ 
             </Button>
           </View>
           
-          {/* ½¨Òé±êÇ© */}
+          {/* å»ºè®®æ ‡ç­¾ */}
           <View style={styles.suggestedTagsContainer}>
-            <Text style={styles.suggestedTagsTitle}>½¨Òé±êÇ©:</Text>
+            <Text style={styles.suggestedTagsTitle}>å»ºè®®æ ‡ç­¾:</Text>
             <View style={styles.suggestedTags}>
               {suggestedTags.map((tag, index) => (
                 <TouchableOpacity 
@@ -123,7 +123,7 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
             </View>
           </View>
           
-          {/* ÒÑÌí¼Ó±êÇ© */}
+          {/* å·²æ·»åŠ æ ‡ç­¾ */}
           <View style={styles.tagsContainer}>
             {tags.map((tag, index) => (
               <View key={index} style={styles.tagItem}>
@@ -139,14 +139,14 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
         </Card>
       </ScrollView>
       
-      {/* ±£´æ°´Å¥ */}
+      {/* ä¿å­˜æŒ‰é’® */}
       <View style={styles.buttonContainer}>
         <Button 
           mode="contained" 
           onPress={saveAnswer}
           style={styles.saveButton}
         >
-          ±£´æ»Ø´ğ
+          ä¿å­˜å›ç­”
         </Button>
       </View>
     </View>

@@ -1,53 +1,88 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Appbar, Button, Chip, ProgressBar } from 'react-native-paper';
-import EmotionChip from '../components/EmotionChip';
-import Card from '../components/Card';
+import EmotionChip from '../../components/EmotionChip';
+import Card from '../../components/Card';
+import DistortionChip from '../../components/DistortionChip';
+import Slider from '@react-native-community/slider';
+import diaryService from '../services/DiaryService';
+import { Alert } from 'react-native';
 
-const DiaryWizardScreen = ({ navigation }: any) => {
-  // ²½Öè×´Ì¬
+const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
+  // æ­¥éª¤çŠ¶æ€
   const [currentStep, setCurrentStep] = useState(0);
   
-  // ±íµ¥Êı¾İ
+  // å®šä¹‰æƒ…ç»ªç±»å‹
+  interface Emotion {
+    id: number;
+    name: string;
+    color: string;
+  }
+
+  // å®šä¹‰è®¤çŸ¥æ‰­æ›²ç±»å‹
+  interface Distortion {
+    id: number;
+    name: string;
+  }
+
+  // æ›´æ–°è¡¨å•æ•°æ®çŠ¶æ€ï¼Œæ·»åŠ è®¤çŸ¥æ‰­æ›²ç›¸å…³å­—æ®µ
   const [formData, setFormData] = useState({
     situation: {
       time: '',
       location: '',
       description: ''
     },
-    emotions: [],
+    emotions: [] as Emotion[],
     automaticThoughts: '',
     automaticThoughtsBelief: 50,
     alternativeThoughts: '',
     alternativeThoughtsBelief: 50,
     behavior: '',
-    result: ''
+    result: '',
+    distortions: [] as Distortion[], // æ·»åŠ è®¤çŸ¥æ‰­æ›²å­—æ®µ
+    distortionSeverity: 5 // æ·»åŠ æ‰­æ›²ç¨‹åº¦å­—æ®µ
   });
-  
-  // ÇéĞ÷Ñ¡Ïî
+
+  // æƒ…ç»ªé€‰é¡¹
   const emotionOptions = [
-    { id: 1, name: '½¹ÂÇ', color: '#FF6B6B' },
-    { id: 2, name: '·ßÅ­', color: '#FF8E53' },
-    { id: 3, name: '±¯ÉË', color: '#4A90E2' },
-    { id: 4, name: '¾ÚÉ¥', color: '#556CD6' },
-    { id: 5, name: '¹Â¶À', color: '#9B59B6' },
-    { id: 6, name: 'ĞßÀ¢', color: '#E91E63' },
-    { id: 7, name: '¿Ö¾å', color: '#26C6DA' },
-    { id: 8, name: '¼µ¶Ê', color: '#4CAF50' },
-    { id: 9, name: 'ĞË·Ü', color: '#FFEB3B' },
-    { id: 10, name: 'Æ½¾²', color: '#8BC34A' }
+    { id: 1, name: 'ç„¦è™‘', color: '#FF6B6B' },
+    { id: 2, name: 'æ„¤æ€’', color: '#FF8E53' },
+    { id: 3, name: 'æ‚²ä¼¤', color: '#4A90E2' },
+    { id: 4, name: 'æ²®ä¸§', color: '#556CD6' },
+    { id: 5, name: 'å­¤ç‹¬', color: '#9B59B6' },
+    { id: 6, name: 'ç¾æ„§', color: '#E91E63' },
+    { id: 7, name: 'ææƒ§', color: '#26C6DA' },
+    { id: 8, name: 'å«‰å¦’', color: '#4CAF50' },
+    { id: 9, name: 'å…´å¥‹', color: '#FFEB3B' },
+    { id: 10, name: 'å¹³é™', color: '#8BC34A' }
   ];
-  
-  // ²½Öè±êÌâ
+
+  // æ·»åŠ è®¤çŸ¥æ‰­æ›²ç±»å‹å®šä¹‰
+  const distortionTypes = [
+    { id: 1, name: 'å…¨æœ‰æˆ–å…¨æ— æ€ç»´' },
+    { id: 2, name: 'ç¾éš¾åŒ–æ€ç»´' },
+    { id: 3, name: 'æƒ…ç»ªåŒ–æ¨ç†' },
+    { id: 4, name: 'é¢„æµ‹æœªæ¥' },
+    { id: 5, name: 'æ”¾å¤§è´Ÿé¢' },
+    { id: 6, name: 'è´´æ ‡ç­¾' },
+    { id: 7, name: 'è¯»å¿ƒæœ¯' },
+    { id: 8, name: 'ç¼©å°æ­£é¢' },
+    { id: 9, name: 'è´£å¤‡ä»–äºº' },
+    { id: 10, name: 'è¿‡åº¦æ¦‚æ‹¬' },
+    { id: 11, name: 'è‡ªæˆ‘è´£å¤‡' },
+    { id: 12, name: 'åº”è¯¥é™ˆè¿°' }
+  ];
+
+  // æ›´æ–°æ­¥éª¤å®šä¹‰ï¼Œæ·»åŠ è®¤çŸ¥æ‰­æ›²è¯†åˆ«æ­¥éª¤
   const steps = [
-    '¼ÇÂ¼Çé¾³',
-    'Ê¶±ğÇéĞ÷',
-    '·ÖÎö×Ô¶¯Ë¼Î¬',
-    '¹¹½¨Ìæ´úË¼Î¬',
-    '¼ÇÂ¼ĞĞÎªºÍ½á¹û'
+    'è®°å½•æƒ…å¢ƒ',
+    'è¯†åˆ«æƒ…ç»ª',
+    'åˆ†æè‡ªåŠ¨æ€ç»´',
+    'æ„å»ºæ›¿ä»£æ€ç»´',
+    'è¯†åˆ«è®¤çŸ¥æ‰­æ›²'
   ];
-  
-  // ÇĞ»»ÇéĞ÷Ñ¡Ôñ
+
+  // åˆ‡æ¢æƒ…ç»ªé€‰æ‹©
   const toggleEmotion = (emotion: any) => {
     const isSelected = formData.emotions.find((e: any) => e.id === emotion.id);
     if (isSelected) {
@@ -62,58 +97,103 @@ const DiaryWizardScreen = ({ navigation }: any) => {
       });
     }
   };
-  
-  // ¸üĞÂ±íµ¥Êı¾İ
+
+  // åˆ‡æ¢è®¤çŸ¥æ‰­æ›²é€‰æ‹©
+  const toggleDistortion = (distortion: any) => {
+    const isSelected = formData.distortions.find((d: any) => d.id === distortion.id);
+    if (isSelected) {
+      setFormData({
+        ...formData,
+        distortions: formData.distortions.filter((d: any) => d.id !== distortion.id)
+      });
+    } else {
+      setFormData({
+        ...formData,
+        distortions: [...formData.distortions, distortion]
+      });
+    }
+  };
+
+  // æ›´æ–°è¡¨å•æ•°æ®
   const updateFormData = (section: string, field: string, value: any) => {
-    setFormData({
-      ...formData,
-      [section]: {
-        ...formData[section as keyof typeof formData],
-        [field]: value
+    setFormData(prev => {
+      if (section === 'situation') {
+        return { ...prev, situation: { ...prev.situation, [field]: value } };
       }
+      return prev;
     });
   };
   
-  // ÏÂÒ»²½
+  // ä¿å­˜æ—¥è®°
+  const saveDiary = async () => {
+    try {
+      const diaryData: any = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        situation: formData.situation,
+        emotions: formData.emotions,
+        automaticThoughts: formData.automaticThoughts,
+        automaticThoughtsBelief: formData.automaticThoughtsBelief,
+        alternativeThoughts: formData.alternativeThoughts,
+        alternativeThoughtsBelief: formData.alternativeThoughtsBelief,
+        behavior: formData.behavior,
+        result: formData.result,
+        distortions: formData.distortions,
+        distortionSeverity: formData.distortionSeverity,
+        // æ·»åŠ ç¼ºå¤±çš„å­—æ®µä»¥åŒ¹é…DiaryEntryæ¥å£
+        emotionType: formData.emotions.length > 0 ? formData.emotions[0].name : 'å¹³é™',
+        title: formData.situation.description.substring(0, 20) || 'æœªå‘½åæ—¥è®°',
+        excerpt: formData.situation.description.substring(0, 50) || 'æš‚æ— æè¿°'
+      };
+      
+      await diaryService.saveEntry(diaryData);
+      Alert.alert('æˆåŠŸ', 'æ—¥è®°å·²ä¿å­˜');
+      navigation.goBack();
+    } catch (error) {
+      console.error('ä¿å­˜æ—¥è®°å¤±è´¥:', error);
+      Alert.alert('é”™è¯¯', 'ä¿å­˜æ—¥è®°å¤±è´¥');
+    }
+  };
+  
+  // ä¸‹ä¸€æ­¥
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Íê³ÉÏòµ¼£¬±£´æÈÕ¼Ç
-      console.log('±£´æÈÕ¼Ç:', formData);
-      navigation.goBack();
+      // å®Œæˆå‘å¯¼ï¼Œä¿å­˜æ—¥è®°
+      saveDiary();
     }
   };
   
-  // ÉÏÒ»²½
+  // ä¸Šä¸€æ­¥
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
   
-  // äÖÈ¾µ±Ç°²½ÖèÄÚÈİ
+  // æ¸²æŸ“å½“å‰æ­¥éª¤å†…å®¹
   const renderStepContent = () => {
     switch (currentStep) {
-      case 0: // ¼ÇÂ¼Çé¾³
+      case 0: // è®°å½•æƒ…å¢ƒ
         return (
           <Card style={styles.section}>
-            <Text style={styles.sectionTitle}>Çé¾³¼ÇÂ¼</Text>
+            <Text style={styles.sectionTitle}>æƒ…å¢ƒè®°å½•</Text>
             <TextInput
               style={styles.input}
-              placeholder="Ê±¼ä"
+              placeholder="æ—¶é—´"
               value={formData.situation.time}
               onChangeText={(text) => updateFormData('situation', 'time', text)}
             />
             <TextInput
               style={styles.input}
-              placeholder="µØµã"
+              placeholder="åœ°ç‚¹"
               value={formData.situation.location}
               onChangeText={(text) => updateFormData('situation', 'location', text)}
             />
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="Çé¾³ÃèÊö"
+              placeholder="æƒ…å¢ƒæè¿°"
               multiline
               numberOfLines={4}
               value={formData.situation.description}
@@ -122,11 +202,11 @@ const DiaryWizardScreen = ({ navigation }: any) => {
           </Card>
         );
         
-      case 1: // Ê¶±ğÇéĞ÷
+      case 1: // è¯†åˆ«æƒ…ç»ª
         return (
           <Card style={styles.section}>
-            <Text style={styles.sectionTitle}>ÇéĞ÷Ê¶±ğ</Text>
-            <Text style={styles.subtitle}>ÇëÑ¡ÔñÄãµ±Ê±¸ĞÊÜµ½µÄÇéĞ÷£¨¿É¶àÑ¡£©</Text>
+            <Text style={styles.sectionTitle}>æƒ…ç»ªè¯†åˆ«</Text>
+            <Text style={styles.subtitle}>è¯·é€‰æ‹©ä½ å½“æ—¶æ„Ÿå—åˆ°çš„æƒ…ç»ªï¼ˆå¯å¤šé€‰ï¼‰</Text>
             <View style={styles.chipContainer}>
               {emotionOptions.map((emotion) => (
                 <TouchableOpacity
@@ -135,15 +215,16 @@ const DiaryWizardScreen = ({ navigation }: any) => {
                 >
                   <EmotionChip
                     emotion={emotion.name}
-                    color={emotion.color}
                     selected={!!formData.emotions.find((e: any) => e.id === emotion.id)}
-                  />
+                  >
+                    {emotion.name}
+                  </EmotionChip>
                 </TouchableOpacity>
               ))}
             </View>
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="ÉíÌå¸ĞÊÜÃèÊö£¨ÀıÈç£ºĞÄÌø¼ÓËÙ¡¢¼¡Èâ½ôÕÅµÈ£©"
+              placeholder="èº«ä½“æ„Ÿå—æè¿°ï¼ˆä¾‹å¦‚ï¼šå¿ƒè·³åŠ é€Ÿã€è‚Œè‚‰ç´§å¼ ç­‰ï¼‰"
               multiline
               numberOfLines={3}
               value={formData.emotions.map(e => e.name).join(', ')}
@@ -152,21 +233,21 @@ const DiaryWizardScreen = ({ navigation }: any) => {
           </Card>
         );
         
-      case 2: // ·ÖÎö×Ô¶¯Ë¼Î¬
+      case 2: // åˆ†æè‡ªåŠ¨æ€ç»´
         return (
           <Card style={styles.section}>
-            <Text style={styles.sectionTitle}>×Ô¶¯Ë¼Î¬·ÖÎö</Text>
-            <Text style={styles.subtitle}>Ğ´ÏÂµ±Ê±ÄÔº£ÖĞ×Ô¶¯³öÏÖµÄÏë·¨</Text>
+            <Text style={styles.sectionTitle}>è‡ªåŠ¨æ€ç»´åˆ†æ</Text>
+            <Text style={styles.subtitle}>å†™ä¸‹å½“æ—¶è„‘æµ·ä¸­è‡ªåŠ¨å‡ºç°çš„æƒ³æ³•</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="×Ô¶¯Ë¼Î¬ÄÚÈİ..."
+              placeholder="è‡ªåŠ¨æ€ç»´å†…å®¹..."
               multiline
               numberOfLines={4}
               value={formData.automaticThoughts}
               onChangeText={(text) => setFormData({...formData, automaticThoughts: text})}
             />
             <View style={styles.beliefContainer}>
-              <Text>ÕâĞ©Ïë·¨µÄ¿ÉĞÅ¶È: {formData.automaticThoughtsBelief}%</Text>
+              <Text>è¿™äº›æƒ³æ³•çš„å¯ä¿¡åº¦: {formData.automaticThoughtsBelief}%</Text>
               <View style={styles.sliderContainer}>
                 <Text>0</Text>
                 <View style={styles.sliderTrack}>
@@ -183,21 +264,21 @@ const DiaryWizardScreen = ({ navigation }: any) => {
           </Card>
         );
         
-      case 3: // ¹¹½¨Ìæ´úË¼Î¬
+      case 3: // æ„å»ºæ›¿ä»£æ€ç»´
         return (
           <Card style={styles.section}>
-            <Text style={styles.sectionTitle}>¹¹½¨Ìæ´úË¼Î¬</Text>
-            <Text style={styles.subtitle}>³¢ÊÔÓÃ¸üÆ½ºâ¡¢ÀíĞÔµÄÏë·¨À´Ìæ´úÖ®Ç°µÄ×Ô¶¯Ë¼Î¬</Text>
+            <Text style={styles.sectionTitle}>æ„å»ºæ›¿ä»£æ€ç»´</Text>
+            <Text style={styles.subtitle}>å°è¯•ç”¨æ›´å¹³è¡¡ã€ç†æ€§çš„æƒ³æ³•æ¥æ›¿ä»£ä¹‹å‰çš„è‡ªåŠ¨æ€ç»´</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="Ìæ´úË¼Î¬ÄÚÈİ..."
+              placeholder="æ›¿ä»£æ€ç»´å†…å®¹..."
               multiline
               numberOfLines={4}
               value={formData.alternativeThoughts}
               onChangeText={(text) => setFormData({...formData, alternativeThoughts: text})}
             />
             <View style={styles.beliefContainer}>
-              <Text>¶ÔÌæ´úË¼Î¬µÄÏàĞÅ³Ì¶È: {formData.alternativeThoughtsBelief}%</Text>
+              <Text>å¯¹æ›¿ä»£æ€ç»´çš„ç›¸ä¿¡ç¨‹åº¦: {formData.alternativeThoughtsBelief}%</Text>
               <View style={styles.sliderContainer}>
                 <Text>0</Text>
                 <View style={styles.sliderTrack}>
@@ -214,25 +295,54 @@ const DiaryWizardScreen = ({ navigation }: any) => {
           </Card>
         );
         
-      case 4: // ¼ÇÂ¼ĞĞÎªºÍ½á¹û
+      case 4: // è¯†åˆ«è®¤çŸ¥æ‰­æ›²
         return (
           <Card style={styles.section}>
-            <Text style={styles.sectionTitle}>ĞĞÎªÓë½á¹û</Text>
+            <Text style={styles.sectionTitle}>è®¤çŸ¥æ‰­æ›²è¯†åˆ«</Text>
+            <Text style={styles.subtitle}>è¯†åˆ«ä½ çš„æ€ç»´ä¸­å¯èƒ½å­˜åœ¨çš„è®¤çŸ¥æ‰­æ›²ç±»å‹</Text>
+            
+            <View style={styles.chipContainer}>
+              {distortionTypes.map((distortion) => (
+                <TouchableOpacity
+                  key={distortion.id}
+                  onPress={() => toggleDistortion(distortion)}
+                >
+                  <DistortionChip
+                    distortion={distortion.name}
+                    selected={!!formData.distortions.find((d: any) => d.id === distortion.id)}
+                  >
+                    {distortion.name}
+                  </DistortionChip>
+                </TouchableOpacity>
+              ))}
+            </View>
+            
+            <View style={styles.beliefContainer}>
+              <Text>æ‰­æ›²ç¨‹åº¦è¯„ä¼°: {formData.distortionSeverity}/10</Text>
+              <View style={styles.sliderContainer}>
+                <Text>ä½</Text>
+                <Slider
+                  style={{ flex: 1, marginHorizontal: 10 }}
+                  minimumValue={1}
+                  maximumValue={10}
+                  step={1}
+                  value={formData.distortionSeverity}
+                  onValueChange={(value) => setFormData({...formData, distortionSeverity: value})}
+                  minimumTrackTintColor="#4A90E2"
+                  maximumTrackTintColor="#ddd"
+                  thumbTintColor="#4A90E2"
+                />
+                <Text>é«˜</Text>
+              </View>
+            </View>
+            
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="Êµ¼ÊĞĞÎªÃèÊö"
+              placeholder="æ”¹è¿›å»ºè®®ï¼ˆç³»ç»Ÿç”Ÿæˆçš„è®¤çŸ¥é‡æ„å»ºè®®ï¼‰..."
               multiline
-              numberOfLines={3}
-              value={formData.behavior}
-              onChangeText={(text) => setFormData({...formData, behavior: text})}
-            />
-            <TextInput
-              style={[styles.input, styles.textArea]}
-              placeholder="½á¹ûÆÀ¼Û£¨Õâ¼şÊÂ´øÀ´ÁËÊ²Ã´ºó¹û£¿£©"
-              multiline
-              numberOfLines={3}
-              value={formData.result}
-              onChangeText={(text) => setFormData({...formData, result: text})}
+              numberOfLines={4}
+              // è¿™é‡Œå¯ä»¥æ·»åŠ AIç”Ÿæˆçš„å»ºè®®
+              editable={false}
             />
           </Card>
         );
@@ -246,10 +356,10 @@ const DiaryWizardScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="ÈÕ¼Ç´´½¨Ïòµ¼" />
+        <Appbar.Content title="æ—¥è®°åˆ›å»ºå‘å¯¼" />
       </Appbar.Header>
       
-      {/* ½ø¶ÈÌõ */}
+      {/* è¿›åº¦æ¡ */}
       <View style={styles.progressContainer}>
         <ProgressBar 
           progress={(currentStep + 1) / steps.length} 
@@ -257,31 +367,31 @@ const DiaryWizardScreen = ({ navigation }: any) => {
           color="#4A90E2"
         />
         <Text style={styles.stepText}>
-          µÚ {currentStep + 1} ²½£¬¹² {steps.length} ²½
+          ç¬¬ {currentStep + 1} æ­¥ï¼Œå…± {steps.length} æ­¥
         </Text>
         <Text style={styles.stepTitle}>{steps[currentStep]}</Text>
       </View>
       
-      {/* ²½ÖèÄÚÈİ */}
+      {/* æ­¥éª¤å†…å®¹ */}
       <ScrollView style={styles.content}>
         {renderStepContent()}
       </ScrollView>
       
-      {/* µ¼º½°´Å¥ */}
+      {/* å¯¼èˆªæŒ‰é’® */}
       <View style={styles.buttonContainer}>
         <Button
           onPress={prevStep}
           disabled={currentStep === 0}
           style={styles.navButton}
         >
-          ÉÏÒ»²½
+          ä¸Šä¸€æ­¥
         </Button>
         <Button
           mode="contained"
           onPress={nextStep}
           style={styles.navButton}
         >
-          {currentStep === steps.length - 1 ? 'Íê³É' : 'ÏÂÒ»²½'}
+          {currentStep === steps.length - 1 ? 'å®Œæˆ' : 'ä¸‹ä¸€æ­¥'}
         </Button>
       </View>
     </View>

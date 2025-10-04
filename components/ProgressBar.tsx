@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
   },
   rounded: {
-    borderRadius: 3,
+    borderRadius: 1.5,
   },
 });
 

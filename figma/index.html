@@ -128,6 +128,54 @@
             transform: rotate(90deg);
             transform-origin: 50% 50%;
         }
+        
+        .nav-button {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            text-align: left;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-button:hover {
+            background: #f5f5f7;
+            border-color: #007AFF;
+        }
+        
+        .nav-button i {
+            margin-right: 12px;
+            color: #007AFF;
+        }
+        
+        .feature-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        .badge-completed {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+        
+        .badge-in-progress {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+        
+        .badge-planned {
+            background: #e3f2fd;
+            color: #2196f3;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
@@ -154,7 +202,7 @@
         <div class="tab-bar">
             <div class="tab-item tab-active" onclick="loadPage('home.html')">
                 <div class="tab-icon"><i class="fas fa-home"></i></div>
-                <div class="tab-label">首页</div>
+                <div class="tab-label">主页</div>
             </div>
             <div class="tab-item" onclick="loadPage('diary.html')">
                 <div class="tab-icon"><i class="fas fa-book"></i></div>
@@ -174,6 +222,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         // 切换页面函数

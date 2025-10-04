@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日记创建向导</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: white;
+            height: 100%;
+        }
+        
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .emotion-chip {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f2f2f7;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .emotion-chip-active {
+            background: #007AFF;
+            color: white;
+        }
+        
+        .distortion-chip {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f2f2f7;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .distortion-chip-active {
+            background: #ff3b30;
+            color: white;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .step-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .step-dot-active {
+            background: #007AFF;
+        }
+        
+        .step-dot-completed {
+            background: #34c759;
+        }
+        
+        .step-label {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 12px;
+            color: #8e8e93;
+        }
+    </style>
+</head>
+<body class="h-full overflow-y-auto p-4">
+    <!-- 头部 -->
+    <div class="flex justify-between items-center mb-6">
+        <div class="text-xl font-bold">创建日记</div>
+        <button class="text-gray-500">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <!-- 步骤指示器 -->
+    <div class="card p-4 mb-6">
+        <div class="step-indicator">
+            <div class="step-dot step-dot-completed">1</div>
+            <div class="step-dot step-dot-completed">2</div>
+            <div class="step-dot step-dot-active">3</div>
+            <div class="step-dot">4</div>
+            <div class="step-dot">5</div>
+            <div class="step-label" style="left: 0%">情境</div>
+            <div class="step-label" style="left: 25%">情绪</div>
+            <div class="step-label" style="left: 50%">自动思维</div>
+            <div class="step-label" style="left: 75%">替代思维</div>
+            <div class="step-label" style="left: 100%">行为结果</div>
+        </div>
+    </div>
+    
+    <!-- 步骤内容 - 自动思维 -->
+    <div class="card p-4 mb-6">
+        <div class="font-medium text-lg mb-4">自动思维</div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="thought">
+                记录你的自动思维
+            </label>
+            <textarea id="thought" class="w-full p-3 border border-gray-300 rounded-lg" rows="4" placeholder="当我...时，我想到...">我可能无法胜任这份工作，我永远无法达到领导的期望。</textarea>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                这个想法有多可信？(1-100%)
+            </label>
+            <div class="flex items-center">
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 85%"></div>
+                </div>
+                <div class="ml-4 w-10 text-center font-medium">85%</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 认知扭曲识别 -->
+    <div class="card p-4 mb-6">
+        <div class="font-medium text-lg mb-4">认知扭曲识别</div>
+        <div class="text-gray-600 text-sm mb-4">
+            识别你的思维中可能存在的认知扭曲类型
+        </div>
+        
+        <div class="flex flex-wrap">
+            <div class="distortion-chip">全有或全无思维</div>
+            <div class="distortion-chip distortion-chip-active">灾难化思维</div>
+            <div class="distortion-chip">情绪化推理</div>
+            <div class="distortion-chip">预测未来</div>
+            <div class="distortion-chip">放大负面</div>
+            <div class="distortion-chip">贴标签</div>
+            <div class="distortion-chip distortion-chip-active">过度概括</div>
+            <div class="distortion-chip">读心术</div>
+            <div class="distortion-chip">缩小正面</div>
+            <div class="distortion-chip">责备他人</div>
+            <div class="distortion-chip">自我责备</div>
+            <div class="distortion-chip">应该陈述</div>
+        </div>
+    </div>
+    
+    <!-- 操作按钮 -->
+    <div class="flex justify-between">
+        <button class="px-6 py-3 border border-gray-300 rounded-full">
+            <i class="fas fa-arrow-left mr-2"></i>上一步
+        </button>
+        <button class="px-6 py-3 bg-blue-500 text-white rounded-full">
+            下一步<i class="fas fa-arrow-right ml-2"></i>
+        </button>
+    </div>
+</body>
+</html>

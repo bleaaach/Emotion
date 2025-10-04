@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoMind - 导航结构规划</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f7;
+        }
+        
+        .phone-frame {
+            width: 390px;
+            height: 844px;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            background: white;
+            position: relative;
+            margin: 20px auto;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background: white;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .tab-bar {
+            height: 84px;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            flex: 1;
+        }
+        
+        .tab-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+            color: #8e8e93;
+        }
+        
+        .tab-label {
+            font-size: 10px;
+            color: #8e8e93;
+        }
+        
+        .tab-active .tab-icon,
+        .tab-active .tab-label {
+            color: #007AFF;
+        }
+        
+        .content-area {
+            height: calc(100% - 44px - 84px);
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .module-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-title i {
+            margin-right: 10px;
+            color: #007AFF;
+        }
+        
+        .feature-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-item i {
+            margin-right: 12px;
+            color: #8e8e93;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        .status-completed {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+        
+        .status-in-progress {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+        
+        .status-planned {
+            background: #e3f2fd;
+            color: #2196f3;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-2xl font-bold mb-6 text-center">EchoMind - CBT应用导航结构规划</h1>
+    
+    <!-- 模拟iPhone 15 Pro -->
+    <div class="phone-frame">
+        <!-- 状态栏 -->
+        <div class="status-bar">
+            <div>9:41</div>
+            <div class="flex space-x-1">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <div class="text-xl font-bold mb-6">导航结构规划</div>
+            
+            <!-- 底部标签栏 -->
+            <div class="module-card">
+                <div class="module-title">
+                    <i class="fas fa-map"></i>
+                    底部标签栏
+                </div>
+                <div class="grid grid-cols-5 gap-2 text-center">
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <i class="fas fa-home text-blue-500 block mb-1"></i>
+                        <span class="text-xs">首页</span>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <i class="fas fa-book text-blue-500 block mb-1"></i>
+                        <span class="text-xs">日记</span>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <i class="fas fa-chart-bar text-blue-500 block mb-1"></i>
+                        <span class="text-xs">统计</span>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <i class="fas fa-dumbbell text-blue-500 block mb-1"></i>
+                        <span class="text-xs">练习</span>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <i class="fas fa-user text-blue-500 block mb-1"></i>
+                        <span class="text-xs">我的</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 核心功能模块 -->
+            <div class="module-card">
+                <div class="module-title">
+                    <i class="fas fa-layer-group"></i>
+                    核心功能模块
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-home"></i>
+                    <div class="flex-1">首页模块</div>
+                    <span class="status-completed">已完成</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-book"></i>
+                    <div class="flex-1">
+                        <div>日记模块</div>
+                        <div class="text-xs text-gray-500 ml-6">- 日记列表</div>
+                        <div class="text-xs text-gray-500 ml-6">- 日记详情</div>
+                        <div class="text-xs text-gray-500 ml-6">- 日记创建向导</div>
+                    </div>
+                    <span class="status-completed">已完成</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <div class="flex-1">
+                        <div>统计模块</div>
+                        <div class="text-xs text-gray-500 ml-6">- 统计概览</div>
+                        <div class="text-xs text-gray-500 ml-6">- 详细统计</div>
+                        <div class="text-xs text-gray-500 ml-6">- 个人报告</div>
+                    </div>
+                    <span class="status-completed">已完成</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="flex-1">
+                        <div>个人说明书模块</div>
+                        <div class="text-xs text-gray-500 ml-6">- 问题库主页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 问题回答页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 个人档案页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 自定义问题页</div>
+                    </div>
+                    <span class="status-completed">已完成</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-robot"></i>
+                    <div class="flex-1">
+                        <div>AI分析模块</div>
+                        <div class="text-xs text-gray-500 ml-6">- AI洞察主页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 洞察详情页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 对话式AI页</div>
+                    </div>
+                    <span class="status-planned">计划中</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-dumbbell"></i>
+                    <div class="flex-1">
+                        <div>练习库模块</div>
+                        <div class="text-xs text-gray-500 ml-6">- 练习库主页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 练习详情页</div>
+                        <div class="text-xs text-gray-500 ml-6">- 深度问题定义卡</div>
+                        <div class="text-xs text-gray-500 ml-6">- 非暴力沟通练习</div>
+                    </div>
+                    <span class="status-in-progress">开发中</span>
+                </div>
+            </div>
+            
+            <!-- 个人中心模块 -->
+            <div class="module-card">
+                <div class="module-title">
+                    <i class="fas fa-user"></i>
+                    个人中心模块
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="flex-1">个人档案</div>
+                    <span class="status-completed">已完成</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-cog"></i>
+                    <div class="flex-1">设置</div>
+                    <span class="status-completed">已完成</span>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-question-circle"></i>
+                    <div class="flex-1">帮助与反馈</div>
+                    <span class="status-planned">计划中</span>
+                </div>
+            </div>
+            
+            <!-- 开发优先级 -->
+            <div class="module-card">
+                <div class="module-title">
+                    <i class="fas fa-tasks"></i>
+                    开发优先级规划
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-flag"></i>
+                    <div class="flex-1">
+                        <div>第一阶段：MVP</div>
+                        <div class="text-xs text-gray-500 ml-6">- 日记模块基础功能</div>
+                        <div class="text-xs text-gray-500 ml-6">- 个人中心基础功能</div>
+                        <div class="text-xs text-gray-500 ml-6">- 简单的数据展示</div>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-flag"></i>
+                    <div class="flex-1">
+                        <div>第二阶段</div>
+                        <div class="text-xs text-gray-500 ml-6">- 统计模块</div>
+                        <div class="text-xs text-gray-500 ml-6">- 个人说明书基础功能</div>
+                        <div class="text-xs text-gray-500 ml-6">- 练习库核心功能</div>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-flag"></i>
+                    <div class="flex-1">
+                        <div>第三阶段</div>
+                        <div class="text-xs text-gray-500 ml-6">- AI分析功能</div>
+                        <div class="text-xs text-gray-500 ml-6">- 高级可视化</div>
+                        <div class="text-xs text-gray-500 ml-6">- 个性化推荐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <div class="tab-item tab-active">
+                <div class="tab-icon"><i class="fas fa-home"></i></div>
+                <div class="tab-label">首页</div>
+            </div>
+            <div class="tab-item">
+                <div class="tab-icon"><i class="fas fa-book"></i></div>
+                <div class="tab-label">日记</div>
+            </div>
+            <div class="tab-item">
+                <div class="tab-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="tab-label">统计</div>
+            </div>
+            <div class="tab-item">
+                <div class="tab-icon"><i class="fas fa-dumbbell"></i></div>
+                <div class="tab-label">练习</div>
+            </div>
+            <div class="tab-item">
+                <div class="tab-icon"><i class="fas fa-user"></i></div>
+                <div class="tab-label">我的</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center max-w-2xl">
+        <h2 class="text-xl font-bold mb-4">设计理念</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="font-bold mb-2">用户体验</h3>
+                <ul class="text-left text-sm space-y-1">
+                    <li>✓ 简洁直观的界面设计</li>
+                    <li>✓ 减少用户认知负担</li>
+                    <li>✓ 提供清晰的操作反馈</li>
+                    <li>✓ 支持深色/浅色模式切换</li>
+                </ul>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="font-bold mb-2">功能架构</h3>
+                <ul class="text-left text-sm space-y-1">
+                    <li>✓ 模块化功能设计</li>
+                    <li>✓ 清晰的导航结构</li>
+                    <li>✓ 一致的交互模式</li>
+                    <li>✓ 可扩展的系统架构</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

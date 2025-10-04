@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 
 interface CardProps {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, style }) => {
   return (
-    <Surface style={[styles.card, style]} elevation={2}>
+    <Surface style={[styles.card, style]} elevation={1}>
       {children}
     </Surface>
   );
@@ -18,10 +18,17 @@ const Card: React.FC<CardProps> = ({ children, style }) => {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    marginBottom: 16,
     padding: 16,
     backgroundColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 1,
   },
 });
 

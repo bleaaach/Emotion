@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 import { Chip, ChipProps } from 'react-native-paper';
 
 // 从ChipProps中排除children属性，因为我们内部已经处理了内容显示
-interface EmotionChipProps extends Omit<ChipProps, 'children'> {
-  emotion: string;
+interface DistortionChipProps extends Omit<ChipProps, 'children'> {
+  distortion: string;
   selected?: boolean;
 }
 
-const EmotionChip: React.FC<EmotionChipProps> = ({ 
-  emotion, 
+const DistortionChip: React.FC<DistortionChipProps> = ({ 
+  distortion, 
   selected = false,
   ...props 
 }) => {
@@ -26,7 +26,7 @@ const EmotionChip: React.FC<EmotionChipProps> = ({
       textStyle={selected ? styles.chipTextSelected : styles.chipText}
       {...props}
     >
-      {emotion}
+      {distortion}
     </Chip>
   );
 };
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   chipSelected: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ff3b30',
     borderRadius: 16,
     margin: 4,
     paddingVertical: 6,
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmotionChip;
+export default DistortionChip;
