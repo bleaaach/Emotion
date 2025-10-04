@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoMind - CBT应用原型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f7;
+        }
+        
+        .phone-frame {
+            width: 390px;
+            height: 844px;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            background: white;
+            position: relative;
+            margin: 20px auto;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background: white;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .tab-bar {
+            height: 84px;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            flex: 1;
+        }
+        
+        .tab-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+            color: #8e8e93;
+        }
+        
+        .tab-label {
+            font-size: 10px;
+            color: #8e8e93;
+        }
+        
+        .tab-active .tab-icon,
+        .tab-active .tab-label {
+            color: #007AFF;
+        }
+        
+        .content-area {
+            height: calc(100% - 44px - 84px);
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 24px 0 16px 0;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .see-all {
+            font-size: 14px;
+            color: #007AFF;
+        }
+        
+        .emotion-chip {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f2f2f7;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .emotion-chip-active {
+            background: #007AFF;
+            color: white;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-2xl font-bold mb-6 text-center">EchoMind - CBT应用原型</h1>
+    
+    <!-- 主容器，模拟iPhone 15 Pro -->
+    <div class="phone-frame">
+        <!-- 状态栏 -->
+        <div class="status-bar">
+            <div>9:41</div>
+            <div class="flex space-x-1">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <iframe id="contentFrame" src="home.html" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <div class="tab-item tab-active" onclick="loadPage('home.html')">
+                <div class="tab-icon"><i class="fas fa-home"></i></div>
+                <div class="tab-label">首页</div>
+            </div>
+            <div class="tab-item" onclick="loadPage('diary.html')">
+                <div class="tab-icon"><i class="fas fa-book"></i></div>
+                <div class="tab-label">日记</div>
+            </div>
+            <div class="tab-item" onclick="loadPage('stats.html')">
+                <div class="tab-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="tab-label">统计</div>
+            </div>
+            <div class="tab-item" onclick="loadPage('exercises.html')">
+                <div class="tab-icon"><i class="fas fa-dumbbell"></i></div>
+                <div class="tab-label">练习</div>
+            </div>
+            <div class="tab-item" onclick="loadPage('profile.html')">
+                <div class="tab-icon"><i class="fas fa-user"></i></div>
+                <div class="tab-label">我的</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换页面函数
+        function loadPage(page) {
+            document.getElementById('contentFrame').src = page;
+            
+            // 更新标签激活状态
+            const tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach(tab => {
+                tab.classList.remove('tab-active');
+            });
+            
+            // 根据页面设置激活状态
+            if (page === 'home.html') tabs[0].classList.add('tab-active');
+            if (page === 'diary.html') tabs[1].classList.add('tab-active');
+            if (page === 'stats.html') tabs[2].classList.add('tab-active');
+            if (page === 'exercises.html') tabs[3].classList.add('tab-active');
+            if (page === 'profile.html') tabs[4].classList.add('tab-active');
+        }
+    </script>
+</body>
+</html>

@@ -1,101 +1,389 @@
-<<<<<<< HEAD
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# CBT应用功能模块界面原型需求文档
 
-# Getting Started
+## 📋 文档概述
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+### 项目名称
+EchoMind - CBT认知行为疗法应用
 
-## Step 1: Start Metro
+### 文档目的
+定义CBT应用各功能模块的界面原型需求，为UI/UX设计和前端开发提供明确指导
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### 目标用户
+- 需要进行认知行为疗法练习的用户
+- 心理健康自助者
+- 心理咨询师推荐的客户
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## 📅 开发计划与进度跟踪
 
-```sh
-# Using npm
+### 迭代说明
+根据开发规范，每次迭代都需要更新此部分以跟踪开发进度和已完成的功能。
+
+### 已完成功能模块 ✅
+
+- [x] UI组件库基础框架搭建
+- [x] EmotionChip情绪选择组件
+- [x] Card卡片容器组件
+- [x] ProgressBar进度条组件
+- [x] StatsChart统计图表组件
+- [x] ExerciseCard练习卡片组件
+- [x] InsightCard洞察卡片组件
+- [x] EmotionIndicator情绪指示器组件
+- [x] Figma原型到React Native组件的转换
+- [x] 主页屏幕整合
+- [x] 统计页面组件
+- [x] 日记列表页
+- [x] 个人中心页面
+- [x] 个人说明书系统模块开发
+  - [x] 问题库主页
+  - [x] 问题回答页
+  - [x] 个人档案页
+  - [x] 自定义问题页
+
+### 待开发功能模块 🔜
+
+- [x] 日记模块开发
+  - [x] 日记详情页
+  - [x] 日记创建向导
+- [ ] AI分析模块开发
+  - [ ] AI洞察主页
+  - [ ] 洞察详情页
+  - [ ] 对话式AI页
+- [ ] 练习库模块开发
+  - [ ] 练习库主页
+  - [ ] 练习详情页
+  - [ ] 深度问题卡页
+  - [ ] 非暴力沟通练习页
+- [ ] 导航系统集成
+- [ ] 状态管理配置 (Redux Toolkit)
+- [ ] 数据持久化 (AsyncStorage)
+- [ ] 本地化支持
+
+### 迭代优化建议 📈
+
+1. 组件库需要进一步完善，添加更多通用组件
+2. 考虑添加动画效果以提升用户体验
+3. 需要建立统一的主题和样式系统
+4. 建立更完善的测试体系
+5. 考虑添加深色模式支持
+
+## 🎯 核心功能模块
+
+### 1. 增强版日记功能模块
+
+#### 1.1 功能概述
+提供精细化的CBT日记记录功能，帮助用户记录情境、情绪、自动思维和替代思维
+
+#### 1.2 界面原型需求
+
+##### 1.2.1 日记列表页
+- 展示日记条目列表，按时间倒序排列
+- 每条日记显示日期、主要情绪和简要情境
+- 支持按日期筛选和搜索
+- 提供"添加新日记"按钮
+
+##### 1.2.2 日记详情页/编辑页
+- 情境记录区域：
+  - 时间选择器
+  - 地点输入框
+  - 情境描述文本框（多行输入）
+  
+- 情绪记录区域：
+  - 情绪选择器（可多选）
+  - 情绪强度滑块（1-10级）
+  - 身体感受描述
+  
+- 自动思维记录区域：
+  - 思维内容文本框
+  - 思维可信度评分（1-100%）
+  
+- 替代思维区域：
+  - 替代思维内容文本框
+  - 新的可信度评分
+  
+- 行为结果记录：
+  - 实际行为描述
+  - 结果评价
+
+##### 1.2.3 日记创建向导
+- 分步骤引导用户完成日记记录
+- 步骤1：记录情境
+- 步骤2：识别情绪
+- 步骤3：分析自动思维
+- 步骤4：构建替代思维
+- 步骤5：记录行为和结果
+
+### 2. 数据统计与可视化模块
+
+#### 2.1 功能概述
+对用户的CBT记录和情绪变化进行统计分析，并以图表形式展示
+
+#### 2.2 界面原型需求
+
+##### 2.2.1 统计概览页
+- 情绪趋势图（折线图）
+- 最常出现的情绪Top 5（柱状图）
+- 思维模式分析（饼图）
+- 记录频率统计（周/月视图）
+
+##### 2.2.2 详细统计页
+- 情绪波动详细图表
+- 思维转变效果分析
+- 情境触发因素分析
+- 时间段情绪分布
+
+##### 2.2.3 个人报告页
+- 生成周报/月报
+- 关键洞察展示
+- 进步轨迹可视化
+- 导出报告功能
+
+### 3. 个人说明书系统模块
+
+#### 3.1 功能概述
+帮助用户通过回答问题探索深层自我，建立个人认知档案
+
+#### 3.2 界面原型需求
+
+##### 3.2.1 问题库主页
+- 分类展示问题（自我认知、价值观、人际关系等）
+- 每日推荐问题卡片
+- 已回答问题标记
+- 个人收藏问题
+
+##### 3.2.2 问题回答页
+- 问题展示区域
+- 富文本回答编辑器
+- 回答历史查看
+- 标签添加功能
+
+##### 3.2.3 个人档案页
+- 用户回答的问题汇总
+- 关键词云展示
+- 个人洞察分析
+- 档案更新历史
+
+##### 3.2.4 自定义问题页
+- 添加个人问题表单
+- 问题分类设置
+- 问题编辑功能
+
+### 4. AI分析功能模块
+
+#### 4.1 功能概述
+基于用户记录提供智能分析和个性化建议
+
+#### 4.2 界面原型需求
+
+##### 4.2.1 AI洞察主页
+- 今日洞察卡片
+- 模式识别结果
+- 个性化建议列表
+- AI分析历史
+
+##### 4.2.2 洞察详情页
+- 洞察内容详细展示
+- 数据支撑证据
+- 相关日记条目链接
+- 用户反馈机制
+
+##### 4.2.3 对话式AI页
+- 聊天界面样式
+- 用户输入框
+- AI回复展示
+- 历史对话记录
+
+### 5. 练习库系统模块
+
+#### 5.1 功能概述
+提供CBT相关练习，帮助用户提升情绪识别和沟通技巧
+
+#### 5.2 界面原型需求
+
+##### 5.2.1 练习库主页
+- 练习分类导航（情绪识别、沟通技巧、思维重构等）
+- 热门练习推荐
+- 个人练习进度
+- 新练习提醒
+
+##### 5.2.2 练习详情页
+- 练习介绍和目标
+- 步骤指导
+- 计时器/工具支持
+- 练习记录和反思
+
+##### 5.2.3 深度问题卡页
+- 问题卡片展示
+- 卡片翻转动画
+- 收藏功能
+- 自定义卡片创建
+
+##### 5.2.4 非暴力沟通练习页
+- 四要素展示（观察、感受、需要、请求）
+- 练习场景选择
+- 表达模板
+- 示例展示
+
+## 🎨 UI/UX设计原则
+
+### 1. 视觉设计
+- 采用柔和、平静的色彩方案，减少用户心理压力
+- 使用清晰的视觉层次，突出重要信息
+- 保持界面简洁，避免信息过载
+- 支持深色/浅色模式切换
+
+### 2. 交互设计
+- 提供清晰的操作反馈
+- 减少用户认知负担
+- 支持手势操作（滑动删除、下拉刷新等）
+- 保持操作一致性
+
+### 3. 可访问性
+- 支持屏幕阅读器
+- 提供足够的颜色对比度
+- 支持字体大小调整
+- 考虑色盲用户需求
+
+### 4. 响应式设计
+- 适配不同屏幕尺寸
+- 支持横竖屏切换
+- 优化触摸目标大小
+
+## 📱 导航结构
+
+### 主要导航模式
+- 底部标签导航（主页、日记、统计、练习、个人中心）
+- 顶部功能导航（搜索、通知、设置）
+- 侧边栏导航（个人档案、设置、帮助等）
+
+### 页面层级
+```
+主页
+├── 日记模块
+│   ├── 日记列表
+│   ├── 日记详情
+│   └── 日记创建向导
+├── 统计模块
+│   ├── 统计概览
+│   ├── 详细统计
+│   └── 个人报告
+├── 个人说明书模块
+│   ├── 问题库主页
+│   ├── 问题回答页
+│   ├── 个人档案页
+│   └── 自定义问题页
+├── AI分析模块
+│   ├── AI洞察主页
+│   ├── 洞察详情页
+│   └── 对话式AI页
+├── 练习库模块
+│   ├── 练习库主页
+│   ├── 练习详情页
+│   ├── 深度问题卡页
+│   └── 非暴力沟通练习页
+└── 个人中心
+    ├── 个人档案
+    ├── 设置
+    └── 帮助与反馈
+```
+
+## 🚀 技术实现要点
+
+### 1. 性能优化
+- 列表页面使用虚拟滚动
+- 图片资源懒加载
+- 数据缓存策略
+- 首屏加载优化
+
+### 2. 数据安全
+- 本地数据加密存储
+- 敏感信息保护
+- 用户隐私设置
+- 数据导出/删除功能
+
+### 3. 离线支持
+- 核心功能离线可用
+- 数据同步机制
+- 网络状态提示
+
+### 4. 依赖安装
+项目需要安装以下额外依赖：
+```bash
+# 进入EmotionPreview目录
+cd EmotionPreview
+
+# 安装React Navigation依赖
+npm install @react-navigation/native @react-navigation/bottom-tabs react-native-screens react-native-safe-area-context
+
+# 安装React Native Paper UI库
+npm install react-native-paper
+```
+
+### 5. 运行项目
+项目使用Expo构建，运行方式如下：
+```bash
+# 进入EmotionPreview目录
+cd EmotionPreview
+
+# 启动Expo开发服务器
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+# 或者直接在Android上运行
 npm run android
 
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# 或者直接在iOS上运行（仅限macOS）
 npm run ios
 
-# OR using Yarn
-yarn ios
+# 或者在Web上运行
+npm run web
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 6. 项目结构说明
+为了确保Expo项目能够正确运行，我们将组件文件复制到[EmotionPreview/components](file:///d:/Code/Emotion/Emotion/EmotionPreview/components/Card.tsx)目录下：
+- [src/screens](file:///d:/Code/Emotion/Emotion/src/screens/HomeScreen.tsx) - 存放TypeScript版本的屏幕组件（主开发目录）
+- [EmotionPreview/components](file:///d:/Code/Emotion/Emotion/EmotionPreview/components/Card.tsx) - 存放JavaScript版本的屏幕组件（Expo运行目录）
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📅 开发优先级建议
 
-## Step 3: Modify your app
+### 第一阶段（MVP）
+1. 日记模块基础功能
+2. 个人中心基础功能
+3. 简单的数据展示
 
-Now that you have successfully run the app, let's make changes!
+### 第二阶段
+1. 统计模块
+2. 个人说明书基础功能
+3. 练习库核心功能
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### 第三阶段
+1. AI分析功能
+2. 高级可视化
+3. 个性化推荐
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### 第四阶段
+1. 社交功能（可选）
+2. 高级定制化
+3. 多语言支持
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## ✅ 验收标准
 
-## Congratulations! :tada:
+### 功能完整性
+- 所有核心功能模块可正常使用
+- 数据录入和展示准确无误
+- 用户流程顺畅无阻
 
-You've successfully run and modified your React Native App. :partying_face:
+### 用户体验
+- 界面美观、操作直观
+- 响应速度快，无明显卡顿
+- 错误处理友好
 
-### Now what?
+### 技术要求
+- 代码结构清晰，易于维护
+- 符合React Native最佳实践
+- 通过基本的测试用例
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## 📞 后续步骤
 
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-=======
-# Emotion
->>>>>>> a9917504c9058274bd39612cc1603d63ab337769
+1. UI设计师根据此文档创建高保真原型
+2. 前端开发团队进行技术评估
+3. 产品团队确认功能优先级
+4. 制定详细的开发计划和时间表

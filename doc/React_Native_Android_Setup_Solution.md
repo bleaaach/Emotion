@@ -99,7 +99,7 @@ cd android
 
 ### 3. Android SDK 权限问题
 
-SDK 安装在系统目录（如 [D:\Program Files\Android\SDK](file:///D:/Program%20Files/Android/SDK)）会导致权限问题，解决方法是将 SDK 路径更改为用户目录下可写的路径。
+SDK 安装在系统目录（如 [D:\Android\SDK](file:///D:/Program%20Files/Android/SDK)）会导致权限问题，解决方法是将 SDK 路径更改为用户目录下可写的路径。
 
 #### 3.1 配置 SDK 路径
 
@@ -123,9 +123,9 @@ $env:ANDROID_HOME="C:\Users\Public\Android\Sdk"
 将原有 SDK 组件复制到新路径：
 
 ```powershell
-Copy-Item -Path "D:\Program Files\Android\SDK\build-tools\35.0.0" -Destination "C:\Users\Public\Android\Sdk\build-tools\35.0.0" -Recurse
-Copy-Item -Path "D:\Program Files\Android\SDK\platforms\android-35" -Destination "C:\Users\Public\Android\Sdk\platforms\android-35" -Recurse
-Copy-Item -Path "D:\Program Files\Android\SDK\ndk\25.1.8937393" -Destination "C:\Users\Public\Android\Sdk\ndk\25.1.8937393" -Recurse
+Copy-Item -Path "D:\Android\SDK\build-tools\35.0.0" -Destination "C:\Users\Public\Android\Sdk\build-tools\35.0.0" -Recurse
+Copy-Item -Path "D:\Android\SDK\platforms\android-35" -Destination "C:\Users\Public\Android\Sdk\platforms\android-35" -Recurse
+Copy-Item -Path "D:\Android\SDK\ndk\25.1.8937393" -Destination "C:\Users\Public\Android\Sdk\ndk\25.1.8937393" -Recurse
 ```
 
 ### 4. NDK 兼容性问题
@@ -197,14 +197,14 @@ newArchEnabled=false
 如果遇到以下错误：
 
 ```
-The SDK directory is not writable (D:\Program Files\Android\SDK)
+The SDK directory is not writable (D:\Android\SDK)
 ```
 
 请使用环境变量将 SDK 路径指向用户目录：
 
 ```powershell
-$env:ANDROID_SDK_ROOT="C:\Users\Public\Android\Sdk"
-$env:ANDROID_HOME="C:\Users\Public\Android\Sdk"
+$env:ANDROID_SDK_ROOT="D:\Android\SDK"
+$env:ANDROID_HOME="D:\Android\SDK"
 ```
 
 ## 总结

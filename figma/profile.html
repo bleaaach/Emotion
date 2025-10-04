@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: white;
+            height: 100%;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 16px;
+            color: #007AFF;
+        }
+    </style>
+</head>
+<body class="h-full overflow-y-auto">
+    <!-- 用户信息 -->
+    <div class="p-6 bg-gradient-to-b from-blue-50 to-white">
+        <div class="flex items-center">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="w-16 h-16 rounded-full mr-4" alt="用户头像">
+            <div class="flex-1">
+                <div class="text-xl font-bold">用户名</div>
+                <div class="text-sm text-gray-500 mt-1">已使用 EchoMind 86 天</div>
+            </div>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm">编辑资料</button>
+        </div>
+    </div>
+
+    <!-- 使用统计 -->
+    <div class="flex p-4 border-b border-gray-100">
+        <div class="flex-1 text-center">
+            <div class="text-lg font-bold">24</div>
+            <div class="text-xs text-gray-500">日记记录</div>
+        </div>
+        <div class="flex-1 text-center">
+            <div class="text-lg font-bold">18</div>
+            <div class="text-xs text-gray-500">CBT练习</div>
+        </div>
+        <div class="flex-1 text-center">
+            <div class="text-lg font-bold">86</div>
+            <div class="text-xs text-gray-500">使用天数</div>
+        </div>
+    </div>
+
+    <!-- 功能菜单 -->
+    <div class="p-4">
+        <div class="menu-item">
+            <div class="menu-icon"><i class="fas fa-user-circle"></i></div>
+            <div class="flex-1 font-medium">个人说明书</div>
+            <div class="text-gray-400"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon"><i class="fas fa-bell"></i></div>
+            <div class="flex-1 font-medium">提醒设置</div>
+            <div class="text-gray-400"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon"><i class="fas fa-moon"></i></div>
+            <div class="flex-1 font-medium">夜间模式</div>
+            <div class="text-gray-400">
+                <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                    <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox hidden" />
+                    <label for="toggle" class="toggle-label block h-6 w-12 rounded-full bg-gray-300 cursor-pointer"></label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon"><i class="fas fa-lock"></i></div>
+            <div class="flex-1 font-medium">隐私与安全</div>
+            <div class="text-gray-400"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon"><i class="fas fa-question-circle"></i></div>
+            <div class="flex-1 font-medium">帮助与反馈</div>
+            <div class="text-gray-400"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon"><i class="fas fa-share-alt"></i></div>
+            <div class="flex-1 font-medium">分享应用</div>
+            <div class="text-gray-400"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        
+        <div class="menu-item" style="border-bottom: none;">
+            <div class="menu-icon"><i class="fas fa-cog"></i></div>
+            <div class="flex-1 font-medium">设置</div>
+            <div class="text-gray-400"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </div>
+
+    <style>
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #007AFF;
+        }
+        
+        .toggle-checkbox:checked + .toggle-label:before {
+            transform: translateX(24px);
+        }
+        
+        .toggle-label:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+    </style>
+</body>
+</html>
