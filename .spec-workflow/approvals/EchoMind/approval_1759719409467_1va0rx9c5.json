@@ -1,0 +1,27 @@
+{
+  "id": "approval_1759719409467_1va0rx9c5",
+  "title": "EchoMind需求文档审批",
+  "filePath": ".spec-workflow/specs/requirements.md",
+  "type": "document",
+  "status": "approved",
+  "createdAt": "2025-10-06T02:56:49.467Z",
+  "category": "spec",
+  "categoryName": "EchoMind",
+  "response": "Feedback Summary (1 comments):\n\nSpecific Text Comments:\n1. \"### 3.4 AI分析功能\n\n**用户故事**：\n- 作为用户，我希望系统能分析我的日记内容，以便...\": 对，要做到能和ai沟通，然后给出相关分析和建议\n",
+  "annotations": "{\n  \"decision\": \"needs-revision\",\n  \"comments\": [\n    {\n      \"type\": \"selection\",\n      \"comment\": \"对，要做到能和ai沟通，然后给出相关分析和建议\",\n      \"timestamp\": \"2025-10-06T03:16:45.077Z\",\n      \"selectedText\": \"### 3.4 AI分析功能\\n\\n**用户故事**：\\n- 作为用户，我希望系统能分析我的日记内容，以便发现我可能忽略的情绪模式\\n- 作为用户，我希望获得基于我的数据的个性化洞察和建议，以便更好地管理情绪\\n- 作为用户，我希望看到我的进步和成长，以便保持继续使用的动力\\n\\n**验收标准**：\\n- 实现日记内容分析功能，识别关键词、情绪模式和主题\\n- 提供个性化的情绪管理建议，基于用户的具体情况和数据\\n- 定期生成进步报告，展示用户在情绪管理和思维重构方面的进步\\n- 提供智能推荐，根据用户的需求和偏好推荐相关资源和练习\\n- 确保分析结果和建议的隐私保护和安全存储\",\n      \"highlightColor\": {\n        \"bg\": \"rgba(255, 235, 59, 0.3)\",\n        \"border\": \"#FFEB3B\",\n        \"name\": \"#ffeb3b\"\n      },\n      \"id\": \"comment_1759720605077_7ucnsphik\"\n    }\n  ],\n  \"summary\": \"Feedback Summary (1 comments):\\n\\nSpecific Text Comments:\\n1. \\\"### 3.4 AI分析功能\\n\\n**用户故事**：\\n- 作为用户，我希望系统能分析我的日记内容，以便...\\\": 对，要做到能和ai沟通，然后给出相关分析和建议\\n\",\n  \"timestamp\": \"2025-10-06T03:16:58.277Z\"\n}",
+  "respondedAt": "2025-10-06T03:16:58.614Z",
+  "comments": [
+    {
+      "type": "selection",
+      "comment": "对，要做到能和ai沟通，然后给出相关分析和建议",
+      "timestamp": "2025-10-06T03:16:45.077Z",
+      "selectedText": "### 3.4 AI分析功能\n\n**用户故事**：\n- 作为用户，我希望系统能分析我的日记内容，以便发现我可能忽略的情绪模式\n- 作为用户，我希望获得基于我的数据的个性化洞察和建议，以便更好地管理情绪\n- 作为用户，我希望看到我的进步和成长，以便保持继续使用的动力\n\n**验收标准**：\n- 实现日记内容分析功能，识别关键词、情绪模式和主题\n- 提供个性化的情绪管理建议，基于用户的具体情况和数据\n- 定期生成进步报告，展示用户在情绪管理和思维重构方面的进步\n- 提供智能推荐，根据用户的需求和偏好推荐相关资源和练习\n- 确保分析结果和建议的隐私保护和安全存储",
+      "highlightColor": {
+        "bg": "rgba(255, 235, 59, 0.3)",
+        "border": "#FFEB3B",
+        "name": "#ffeb3b"
+      },
+      "id": "comment_1759720605077_7ucnsphik"
+    }
+  ]
+}

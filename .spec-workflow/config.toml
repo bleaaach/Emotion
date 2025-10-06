@@ -1,0 +1,35 @@
+# 配置文件 for spec-workflow-mcp
+
+[project]
+name = "EchoMind"
+description = "心理成长辅助应用"
+author = "Development Team"
+
+[workflow]
+auto_start_dashboard = true
+port = 3000
+dashboard_refresh_interval = 5000
+
+[specs]
+require_document_sequence = false
+# 是否要求文档按顺序创建（requirements -> design -> tasks）
+enable_versioning = true
+# 是否启用文档版本控制
+
+[approvals]
+enabled = true
+# 是否启用审批流程
+notification_on_request = true
+# 是否在请求审批时发送通知
+
+[localization]
+default_language = "zh"
+# 默认语言
+
+[paths]
+specs_dir = ".spec-workflow/specs"
+approvals_dir = ".spec-workflow/approvals"
+archive_dir = ".spec-workflow/archive"
+steering_dir = ".spec-workflow/steering"
+templates_dir = ".spec-workflow/templates"
+user_templates_dir = ".spec-workflow/user-templates"

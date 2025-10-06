@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/diary-feature-enhancement/tasks.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-06T03:38:43.176Z",
+      "trigger": "initial",
+      "approvalId": "approval_1759721923166_xafk216co",
+      "approvalTitle": "日记功能增强任务分解文档批准请求"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-06T03:39:44.315Z",
+      "trigger": "approved",
+      "approvalId": "approval_1759721923166_xafk216co",
+      "approvalTitle": "日记功能增强任务分解文档批准请求"
+    }
+  ]
+}

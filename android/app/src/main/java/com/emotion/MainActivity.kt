@@ -33,6 +33,7 @@ class MainActivity : ReactActivity() {
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
       // Android 11 (API 30) 及以上版本
       window.insetsController?.let {
+        // 隐藏状态栏和导航栏
         it.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
       }

@@ -1,5 +1,34 @@
 {
   "extends": "@react-native/typescript-config",
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/node_modules", "**/Pods"]
+  "exclude": ["**/node_modules", "**/Pods"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@": ["./src"],
+      "@components/*": ["./src/components/*"],
+      "@components": ["./src/components"],
+      "@legacy-components/*": ["./components/*"],
+      "@legacy-components": ["./components"],
+      "@screens/*": ["./src/screens/*"],
+      "@screens": ["./src/screens"],
+      "@utils/*": ["./src/utils/*"],
+      "@utils": ["./src/utils"],
+      "@types/*": ["./src/types/*"],
+      "@types": ["./src/types"],
+      "@themes/*": ["./src/themes/*"],
+      "@themes": ["./src/themes"],
+      "@services/*": ["./src/services/*"],
+      "@services": ["./src/services"],
+      "@store/*": ["./src/store/*"],
+      "@store": ["./src/store"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@navigation": ["./src/navigation"],
+      "@assets/*": ["./src/assets/*"],
+      "@assets": ["./src/assets"],
+      "@locales/*": ["./src/locales/*"],
+      "@locales": ["./src/locales"]
+    }
+  }
 }

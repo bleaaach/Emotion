@@ -1,0 +1,12 @@
+{
+  "id": "approval_1759719427532_3z4v6hbzm",
+  "title": "EchoMind任务文档审批",
+  "filePath": ".spec-workflow/specs/tasks.md",
+  "type": "document",
+  "status": "approved",
+  "createdAt": "2025-10-06T02:57:07.532Z",
+  "category": "spec",
+  "categoryName": "EchoMind",
+  "response": "通过仪表板批准",
+  "respondedAt": "2025-10-06T03:18:28.431Z"
+}

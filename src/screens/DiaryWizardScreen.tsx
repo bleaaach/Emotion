@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Appbar, Button, Chip, ProgressBar } from 'react-native-paper';
-import EmotionChip from '../../components/EmotionChip';
-import Card from '../../components/Card';
-import DistortionChip from '../../components/DistortionChip';
+import EmotionChip from '@legacy-components/EmotionChip';
+import Card from '@legacy-components/Card';
+import DistortionChip from '@legacy-components/DistortionChip';
 import Slider from '@react-native-community/slider';
 import diaryService from '../services/DiaryService';
 import { Alert } from 'react-native';
+
+// 导入增强组件
+import MultipleEmotionIntensitySelector from '@components/MultipleEmotionIntensitySelector';
+// 导入类型定义
+import { ThoughtPattern, CopingStrategy } from '../../src/types/diary';
 
 const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
   // 步骤状态
@@ -33,6 +38,7 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
       description: ''
     },
     emotions: [] as Emotion[],
+    emotionIntensities: {} as Record<string, number>, // 情绪强度映射
     automaticThoughts: '',
     automaticThoughtsBelief: 50,
     alternativeThoughts: '',
@@ -40,7 +46,10 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
     behavior: '',
     result: '',
     distortions: [] as Distortion[], // 添加认知扭曲字段
-    distortionSeverity: 5 // 添加扭曲程度字段
+    distortionSeverity: 5, // 添加扭曲程度字段
+    thoughtPatterns: [] as ThoughtPattern['id'][], // 思想模式ID列表
+    copingStrategies: [] as CopingStrategy['id'][], // 应对策略ID列表
+    bodySensations: '', // 身体感受
   });
 
   // 情绪选项
@@ -73,22 +82,55 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
     { id: 12, name: '应该陈述' }
   ];
 
-  // 更新步骤定义，添加认知扭曲识别步骤
+  // 更新步骤定义，添加行为结果步骤
   const steps = [
     '记录情境',
     '识别情绪',
+    '情绪强度',
     '分析自动思维',
+    '识别思想模式',
     '构建替代思维',
-    '识别认知扭曲'
+    '选择应对策略',
+    '行为与结果',
+    '识别认知扭曲',
+    '身体感受'
   ];
+
+  // 更新情绪强度
+  const handleIntensityChange = (intensities: Record<string, number>) => {
+    setFormData(prev => ({
+      ...prev,
+      emotionIntensities: intensities
+    }));
+  };
+
+  // 更新身体感受
+  const handleBodySensationsChange = (text: string) => {
+    setFormData(prev => ({
+      ...prev,
+      bodySensations: text
+    }));
+  };
 
   // 切换情绪选择
   const toggleEmotion = (emotion: any) => {
-    const isSelected = formData.emotions.find((e: any) => e.id === emotion.id);
+    // 添加空值检查
+    if (!emotion) return;
+    
+    const isSelected = formData.emotions.find((e: any) => {
+      // 添加空值检查
+      if (!e) return false;
+      return e.id === emotion.id;
+    });
+    
     if (isSelected) {
       setFormData({
         ...formData,
-        emotions: formData.emotions.filter((e: any) => e.id !== emotion.id)
+        emotions: formData.emotions.filter((e: any) => {
+          // 添加空值检查
+          if (!e) return false;
+          return e.id !== emotion.id;
+        })
       });
     } else {
       setFormData({
@@ -127,23 +169,36 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
   // 保存日记
   const saveDiary = async () => {
     try {
+      // 构建情境描述字符串
+      let situationText = formData.situation.description;
+      if (formData.situation.time || formData.situation.location) {
+        situationText = `${formData.situation.time ? formData.situation.time + ' ' : ''}${formData.situation.location ? '在' + formData.situation.location + ' ' : ''}${formData.situation.description}`;
+      }
+      
       const diaryData: any = {
         id: Date.now().toString(),
         date: new Date().toISOString(),
-        situation: formData.situation,
-        emotions: formData.emotions,
+        situation: situationText,
+        emotions: formData.emotions.map((e: any) => {
+          // 添加空值检查
+          if (!e) return '';
+          return typeof e === 'string' ? e : e.name;
+        }),
+        emotionType: formData.emotions.length > 0 ? (formData.emotions[0] ? (typeof formData.emotions[0] === 'string' ? formData.emotions[0] : formData.emotions[0].name) : '平静') : '平静',
+        emotionIntensities: formData.emotionIntensities,
+        thoughtPatterns: formData.thoughtPatterns,
+        copingStrategies: formData.copingStrategies,
+        bodySensations: formData.bodySensations,
+        title: formData.situation.description.substring(0, 20) || '未命名日记',
+        excerpt: formData.situation.description.substring(0, 50) || '暂无描述',
         automaticThoughts: formData.automaticThoughts,
-        automaticThoughtsBelief: formData.automaticThoughtsBelief,
+        beliefRating: formData.automaticThoughtsBelief,
         alternativeThoughts: formData.alternativeThoughts,
-        alternativeThoughtsBelief: formData.alternativeThoughtsBelief,
+        newBeliefRating: formData.alternativeThoughtsBelief,
         behavior: formData.behavior,
         result: formData.result,
-        distortions: formData.distortions,
-        distortionSeverity: formData.distortionSeverity,
-        // 添加缺失的字段以匹配DiaryEntry接口
-        emotionType: formData.emotions.length > 0 ? formData.emotions[0].name : '平静',
-        title: formData.situation.description.substring(0, 20) || '未命名日记',
-        excerpt: formData.situation.description.substring(0, 50) || '暂无描述'
+        distortions: formData.distortions.map((d: any) => d.name),
+        distortionSeverity: formData.distortionSeverity
       };
       
       await diaryService.saveEntry(diaryData);
@@ -179,25 +234,29 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
         return (
           <Card style={styles.section}>
             <Text style={styles.sectionTitle}>情境记录</Text>
+            <Text style={styles.subtitle}>请详细描述当时的情境，包括时间、地点和具体事件</Text>
             <TextInput
               style={styles.input}
-              placeholder="时间"
+              placeholder="时间（例如：下午3点、晚上8:30）"
               value={formData.situation.time}
               onChangeText={(text) => updateFormData('situation', 'time', text)}
+              placeholderTextColor="#999"
             />
             <TextInput
               style={styles.input}
-              placeholder="地点"
+              placeholder="地点（例如：办公室、家中客厅、地铁上）"
               value={formData.situation.location}
               onChangeText={(text) => updateFormData('situation', 'location', text)}
+              placeholderTextColor="#999"
             />
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="情境描述"
+              placeholder="情境描述（请详细描述当时发生了什么，包括事件的起因、经过和你的感受）"
               multiline
               numberOfLines={4}
               value={formData.situation.description}
               onChangeText={(text) => updateFormData('situation', 'description', text)}
+              placeholderTextColor="#999"
             />
           </Card>
         );
@@ -215,10 +274,12 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
                 >
                   <EmotionChip
                     emotion={emotion.name}
-                    selected={!!formData.emotions.find((e: any) => e.id === emotion.id)}
-                  >
-                    {emotion.name}
-                  </EmotionChip>
+                    selected={!!formData.emotions.find((e: any) => {
+                      // 添加空值检查
+                      if (!e) return false;
+                      return e.id === emotion.id;
+                    })}
+                  />
                 </TouchableOpacity>
               ))}
             </View>
@@ -227,20 +288,41 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
               placeholder="身体感受描述（例如：心跳加速、肌肉紧张等）"
               multiline
               numberOfLines={3}
-              value={formData.emotions.map(e => e.name).join(', ')}
+              value={formData.emotions.map(e => {
+                // 添加空值检查
+                if (!e) return '';
+                return e.name || '';
+              }).join(', ')}
               editable={false}
             />
           </Card>
         );
         
-      case 2: // 分析自动思维
+      case 2: // 情绪强度
+        return (
+          <Card style={styles.section}>
+            <Text style={styles.sectionTitle}>情绪强度评估</Text>
+            <Text style={styles.subtitle}>为每种情绪评估其强度</Text>
+            {formData.emotions.length > 0 ? (
+              <MultipleEmotionIntensitySelector
+                emotions={formData.emotions}
+                intensities={formData.emotionIntensities}
+                onIntensityChange={handleIntensityChange}
+              />
+            ) : (
+              <Text style={styles.noEmotionText}>请先在情绪识别步骤中选择至少一种情绪</Text>
+            )}
+          </Card>
+        );
+        
+      case 3: // 分析自动思维
         return (
           <Card style={styles.section}>
             <Text style={styles.sectionTitle}>自动思维分析</Text>
             <Text style={styles.subtitle}>写下当时脑海中自动出现的想法</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="自动思维内容..."
+              placeholder="自动思维内容（例如：我可能无法胜任这份工作）"
               multiline
               numberOfLines={4}
               value={formData.automaticThoughts}
@@ -250,28 +332,47 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
               <Text>这些想法的可信度: {formData.automaticThoughtsBelief}%</Text>
               <View style={styles.sliderContainer}>
                 <Text>0</Text>
-                <View style={styles.sliderTrack}>
-                  <View 
-                    style={[
-                      styles.sliderFill, 
-                      { width: `${formData.automaticThoughtsBelief}%` }
-                    ]} 
-                  />
-                </View>
+                <Slider
+                  style={{ flex: 1, marginHorizontal: 10 }}
+                  minimumValue={0}
+                  maximumValue={100}
+                  step={1}
+                  value={formData.automaticThoughtsBelief}
+                  onValueChange={(value) => setFormData({...formData, automaticThoughtsBelief: value})}
+                  minimumTrackTintColor="#4A90E2"
+                  maximumTrackTintColor="#ddd"
+                  thumbTintColor="#4A90E2"
+                />
                 <Text>100</Text>
               </View>
             </View>
           </Card>
         );
         
-      case 3: // 构建替代思维
+      case 4: // 识别思想模式
+        return (
+          <Card style={styles.section}>
+            <Text style={styles.sectionTitle}>识别思想模式</Text>
+            <Text style={styles.subtitle}>描述与你当时想法相关的思想模式</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="例如：过度概括、灾难化思考、非黑即白思维等"
+              multiline
+              numberOfLines={4}
+              value={formData.thoughtPatterns.join(', ')}
+              onChangeText={(text) => setFormData({...formData, thoughtPatterns: text.split(',').map(p => p.trim()).filter(Boolean)})}
+            />
+          </Card>
+        );
+        
+      case 5: // 构建替代思维
         return (
           <Card style={styles.section}>
             <Text style={styles.sectionTitle}>构建替代思维</Text>
             <Text style={styles.subtitle}>尝试用更平衡、理性的想法来替代之前的自动思维</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="替代思维内容..."
+              placeholder="替代思维内容（例如：我之前完成过类似的项目，这次只是需要更多时间）"
               multiline
               numberOfLines={4}
               value={formData.alternativeThoughts}
@@ -281,21 +382,64 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
               <Text>对替代思维的相信程度: {formData.alternativeThoughtsBelief}%</Text>
               <View style={styles.sliderContainer}>
                 <Text>0</Text>
-                <View style={styles.sliderTrack}>
-                  <View 
-                    style={[
-                      styles.sliderFill, 
-                      { width: `${formData.alternativeThoughtsBelief}%` }
-                    ]} 
-                  />
-                </View>
+                <Slider
+                  style={{ flex: 1, marginHorizontal: 10 }}
+                  minimumValue={0}
+                  maximumValue={100}
+                  step={1}
+                  value={formData.alternativeThoughtsBelief}
+                  onValueChange={(value) => setFormData({...formData, alternativeThoughtsBelief: value})}
+                  minimumTrackTintColor="#4A90E2"
+                  maximumTrackTintColor="#ddd"
+                  thumbTintColor="#4A90E2"
+                />
                 <Text>100</Text>
               </View>
             </View>
           </Card>
         );
         
-      case 4: // 识别认知扭曲
+      case 6: // 选择应对策略
+        return (
+          <Card style={styles.section}>
+            <Text style={styles.sectionTitle}>选择应对策略</Text>
+            <Text style={styles.subtitle}>描述你可以使用的应对策略</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="例如：深呼吸、散步、与朋友交谈等"
+              multiline
+              numberOfLines={4}
+              value={formData.copingStrategies.join(', ')}
+              onChangeText={(text) => setFormData({...formData, copingStrategies: text.split(',').map(s => s.trim()).filter(Boolean)})}
+            />
+          </Card>
+        );
+        
+      case 7: // 行为与结果
+        return (
+          <Card style={styles.section}>
+            <Text style={styles.sectionTitle}>行为与结果</Text>
+            <Text style={styles.subtitle}>描述你实际做了什么以及结果如何</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="实际行为描述（例如：我决定先完成一个小任务来建立信心）"
+              multiline
+              numberOfLines={3}
+              value={formData.behavior}
+              onChangeText={(text) => setFormData({...formData, behavior: text})}
+            />
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="结果评价（例如：完成小任务后我感觉更有信心了）"
+              multiline
+              numberOfLines={3}
+              value={formData.result}
+              onChangeText={(text) => setFormData({...formData, result: text})}
+            />
+          </Card>
+        );
+        
+      case 8: // 识别认知扭曲
         return (
           <Card style={styles.section}>
             <Text style={styles.sectionTitle}>认知扭曲识别</Text>
@@ -310,9 +454,7 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
                   <DistortionChip
                     distortion={distortion.name}
                     selected={!!formData.distortions.find((d: any) => d.id === distortion.id)}
-                  >
-                    {distortion.name}
-                  </DistortionChip>
+                  />
                 </TouchableOpacity>
               ))}
             </View>
@@ -343,6 +485,23 @@ const DiaryWizardScreen = ({ navigation }: { navigation: any }) => {
               numberOfLines={4}
               // 这里可以添加AI生成的建议
               editable={false}
+            />
+          </Card>
+        );
+        
+      case 9: // 身体感受
+        return (
+          <Card style={styles.section}>
+            <Text style={styles.sectionTitle}>身体感受</Text>
+            <Text style={styles.subtitle}>描述你当时身体上的感受和反应</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="身体感受描述（例如：心跳加速、手心出汗、肌肉紧张等）"
+              multiline
+              numberOfLines={4}
+              value={formData.bodySensations}
+              onChangeText={handleBodySensationsChange}
+              placeholderTextColor="#999"
             />
           </Card>
         );
@@ -405,7 +564,9 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     padding: 16,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee'
   },
   progressBar: {
     height: 8,
@@ -430,7 +591,17 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 16,
-    padding: 16
+    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   sectionTitle: {
     fontSize: 18,
@@ -446,10 +617,10 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: '#ddd',
-    borderRadius: 4,
+    borderRadius: 8,
     padding: 12,
     marginBottom: 12,
-    backgroundColor: '#fff'
+    backgroundColor: '#fafafa'
   },
   textArea: {
     height: 100,
@@ -461,7 +632,10 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   beliefContainer: {
-    marginTop: 16
+    marginTop: 16,
+    padding: 12,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8
   },
   sliderContainer: {
     flexDirection: 'row',
@@ -484,11 +658,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#eee'
   },
   navButton: {
     flex: 1,
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    borderRadius: 8,
+    paddingVertical: 4
+  },
+  emotionName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8
+  },
+  intensityItem: {
+    marginBottom: 16,
+    padding: 12,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8
+  },
+  noEmotionText: {
+    fontSize: 14,
+    color: '#999',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    padding: 20
   }
 });
 

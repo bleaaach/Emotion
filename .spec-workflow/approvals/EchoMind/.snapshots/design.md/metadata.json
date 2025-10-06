@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/design.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-06T02:56:59.112Z",
+      "trigger": "initial",
+      "approvalId": "approval_1759719419097_9wctxkqql",
+      "approvalTitle": "EchoMind设计文档审批"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-06T03:18:14.022Z",
+      "trigger": "approved",
+      "approvalId": "approval_1759719419097_9wctxkqql",
+      "approvalTitle": "EchoMind设计文档审批"
+    }
+  ]
+}

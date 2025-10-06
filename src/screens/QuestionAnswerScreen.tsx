@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Appbar, Button, Chip, Divider } from 'react-native-paper';
-import Card from '../components/Card';
-import EmotionChip from '../components/EmotionChip';
+import Card from '@legacy-components/Card';
+import EmotionChip from '@legacy-components/EmotionChip';
 
 const QuestionAnswerScreen = ({ navigation, route }: any) => {
   const { question } = route.params || {};
@@ -62,8 +62,7 @@ const QuestionAnswerScreen = ({ navigation, route }: any) => {
           <Text style={styles.questionTitle}>{question?.title}</Text>
           <View style={styles.questionMeta}>
             <EmotionChip 
-              emotion={question?.category} 
-              color="#4A90E2" 
+              emotion={question?.category}
             />
             {question?.isAnswered && (
               <Chip icon="history" mode="outlined" style={styles.historyChip}>

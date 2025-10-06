@@ -1,0 +1,38 @@
+{
+  "filePath": ".spec-workflow/specs/requirements.md",
+  "currentVersion": 4,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-06T02:56:49.492Z",
+      "trigger": "initial",
+      "approvalId": "approval_1759719409467_1va0rx9c5",
+      "approvalTitle": "EchoMind需求文档审批"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-06T03:16:58.589Z",
+      "trigger": "revision_requested",
+      "approvalId": "approval_1759719409467_1va0rx9c5",
+      "approvalTitle": "EchoMind需求文档审批"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-10-06T03:21:32.152Z",
+      "trigger": "approved",
+      "approvalId": "approval_1759720859058_i8axyxtoi",
+      "approvalTitle": "更新后的EchoMind需求文档审批"
+    },
+    {
+      "version": 4,
+      "filename": "snapshot-004.json",
+      "timestamp": "2025-10-06T03:29:14.618Z",
+      "trigger": "approved",
+      "approvalId": "approval_1759721334112_oabqjp6vy",
+      "approvalTitle": "更新后的EchoMind需求文档审批"
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Appbar, Button, Chip, Divider } from 'react-native-paper';
-import Card from '../components/Card';
-import StatsChart from '../components/StatsChart';
-import InsightCard from '../components/InsightCard';
+import Card from '@legacy-components/Card';
+import StatsChart from '@legacy-components/StatsChart';
+import InsightCard from '@legacy-components/InsightCard';
 
 const PersonalProfileScreen = ({ navigation }: any) => {
   // 示例数据
@@ -63,7 +63,8 @@ const PersonalProfileScreen = ({ navigation }: any) => {
               <Chip 
                 key={index} 
                 mode="outlined" 
-                style={[styles.tag, { fontSize: 12 + (index % 3) * 2 }]}
+                style={styles.tag}
+                textStyle={{ fontSize: 12 + (index % 3) * 2 }}
               >
                 {tag}
               </Chip>
@@ -75,10 +76,13 @@ const PersonalProfileScreen = ({ navigation }: any) => {
         <Card style={styles.section}>
           <Text style={styles.sectionTitle}>个人洞察</Text>
           {insights.map((insight) => (
-            <InsightCard 
+            <InsightCard
               key={insight.id}
               title={insight.title}
               content={insight.content}
+              icon="info"
+              iconColor="#fff"
+              iconBackgroundColor="#4A90E2"
             />
           ))}
         </Card>

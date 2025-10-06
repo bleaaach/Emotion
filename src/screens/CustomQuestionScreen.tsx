@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Appbar, Button, Chip } from 'react-native-paper';
-import Card from '../components/Card';
-import EmotionChip from '../components/EmotionChip';
-
+import Card from '@legacy-components/Card';
+import EmotionChip from '@legacy-components/EmotionChip';
 const CustomQuestionScreen = ({ navigation }: any) => {
   // 表单状态
   const [question, setQuestion] = useState('');

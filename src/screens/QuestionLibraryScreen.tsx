@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Appbar, Button, Chip, Divider, IconButton } from 'react-native-paper';
-import Card from '../components/Card';
-import EmotionChip from '../components/EmotionChip';
+import Card from '@legacy-components/Card';
+import EmotionChip from '@legacy-components/EmotionChip';
 
 const QuestionLibraryScreen = ({ navigation }: any) => {
   // 问题分类
@@ -135,7 +135,6 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
               <View style={styles.questionMeta}>
                 <EmotionChip 
                   emotion={questions[0].category} 
-                  color={categories.find(c => c.name === questions[0].category)?.color || '#999'} 
                 />
                 {questions[0].isAnswered && (
                   <Chip icon="check" mode="outlined" style={styles.answeredChip}>
@@ -161,7 +160,6 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
                   <View style={styles.questionMeta}>
                     <EmotionChip 
                       emotion={question.category} 
-                      color={categories.find(c => c.name === question.category)?.color || '#999'} 
                     />
                     {question.isAnswered && (
                       <Chip icon="check" mode="outlined" style={styles.answeredChip}>
@@ -172,7 +170,7 @@ const QuestionLibraryScreen = ({ navigation }: any) => {
                 </TouchableOpacity>
                 <IconButton 
                   icon={question.isFavorite ? "heart" : "heart-outline"} 
-                  color={question.isFavorite ? "#FF6B6B" : "#999"}
+                  iconColor={question.isFavorite ? "#FF6B6B" : "#999"}
                   onPress={() => toggleFavorite(question.id)}
                 />
               </View>
